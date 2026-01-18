@@ -1,0 +1,104 @@
+\documentclass{article}
+\usepackage[english]{babel}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{enumitem}
+
+\geometry{margin=2.5cm}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Meeting Notes}
+\lfoot{\today}
+\rfoot{\thepage}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1em} 
+
+\title{Meeting Notes}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+% ============ RÉUNION 1 ============
+\section{Meeting 1 [07/01/2026]}
+
+\subsection{Agenda}
+\begin{itemize}
+    \item Validating the TER subject and obtaining an initial refocusing
+    \item Knowing how to start the state of the art
+    \item Choosing the tools to use
+    \item Planning the next meeting
+\end{itemize}
+
+\subsection{Topics Discussed}
+
+During the meeting, we validated the subject on partial preferences. The objective is really to explore this subfield of computational social choice theory by limiting ourselves to indivisible resources.
+
+Afterwards, we listed some avenues for the state of the art. We will start by looking for articles on partial preferences focus on indivisible resources.
+
+\begin{itemize}
+    \item \b{Acceptability:} Some researchers work on partial preferences under questions of acceptability by considering graphs (bipartite). For example, in the marriage problem, some agents refuse an allowance altogether. Thus, not all objects are allocable to a given agent. Acceptability therefore amounts to defining a list of preferences by excluding those on which the agent issues a right of veto.
+    \item \b{Additivity:} Combining individual preferences into bundles of preferences adds information and complexity.
+    \item \b{Metric distortion problem:} Ordinal preferences can be deduced from cardinal preferences and used as partial preferences. We then evaluate the extent to which the solution is degraded compared to what could have been proposed with the initial cardinal preferences.
+    \item \b{Cardinal preferences:}	Agents can express their preference in cardinal form, i.e. the intensity of the benefit they will derive from the allocation. Although this is suitable for evaluating equity criteria (maxmin, envy-free allocation), it is often difficult for agents to express such preferences.
+    \item \b{Truncated ballots:} Derive from the vote theory.
+    \item \b{Uncertain preferences:} The preferences are described by a probability distribution.
+\end{itemize}
+
+\subsection{Tasks}
+For the next meeting on January 14, 2026, I will start the state of the art by listing partial/incomplete preference types.
+
+\newpage
+
+% ============ RÉUNION 2 ============
+\section{Meeting 2 [14/01/2026]}
+
+\subsection{Agenda}
+\begin{itemize}
+    \item Discussed on the partial preferences types found
+    \item Clarifying some concepts
+    \item Identifying key papers and resources
+    \item Creating a GitHub repository for collaboration
+    \item Planning the next meeting
+\end{itemize}
+
+\subsection{Topics Discussed}
+
+During the meeting, we listed exhaustively the partial preferences. To prepare for the meeting, I had started reading the paper « Iterative voting with partial preferences » of Zoi Terzopoulou et al. 
+\begin{itemize}
+    \item \b{Top k preferences:} Agents only rank their top k choices, leaving the rest unranked.
+    \item \b{Truncated preferences:} Similar to top k preferences, but the ranking is truncated at a specific point.
+    \item \b{Ordinal preferences:} Agents express their preferences in a ranked order, without specifying the intensity of their preferences. It's a kind of distortion problem with respect to the cardinal preferences.
+    \item \b{Range of cardinal preferences:} Agents provide a range of values for each option instead of a single value.
+    \item \b{Approval preferences:} Agents indicate if a preference is approved or not, without ranking them. It's a binary indication and can be the result of boolean questions.
+    \item \b{Single peak preferences:} Agents have a most preferred option, and their preference decreases as they move away from this peak (unimodal).
+    \item \b{Euclidean preferences:} Agents' preferences are represented in a multi-dimensional space, where distance reflects preference intensity.
+    \item \b{Subset of possible orders:} Agents provide a subset of possible rankings. The top k is a special case of this type.
+    \item \b{Combinaison of types:} In practice, agents may express their preferences using a combination of the above types. For example, top k with structural aspects (single peak, euclidean).
+\end{itemize}
+
+Then, I learned how to search for articles on Google Scholar.
+
+We also discussed researchers who have worked with partial preferences:
+
+\begin{itemize}
+    \item Zoi Terzopoulou
+    \item Sylvain Bouveret
+    \item Jérôme Lang (director of LAMSADE): He studied the solutions that can occur and those that are valid (possible for a given problem).
+\end{itemize}
+
+Subsequently, we created a GitHub repository to collaborate on the TER.
+
+Finally, we have also mentioned the value of partial information. In the problems considered, it is strongly assumed that agents clearly express their preferences. This work can be cognitively heavy for an agent who after a certain time will express himself at random. Then, sometimes the lack of information (for example on the ten candidates in an election) can prevent the expression of a complete ranking. How do you measure the value of a preference in a given context? This question is a matter of data elicitation and remains annexed to the study framework, although it justifies the importance of the study of partial preferences.
+
+\subsection{Tasks}
+For the next meeting on January 21, 2026, I will continue the state of the art by reading the articles.
+
+\newpage
+
+\end{document}
