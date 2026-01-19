@@ -1,0 +1,184 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{booktabs}
+
+
+\geometry{margin=1in}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Literature Review Notes}
+\lhead{\today}
+\cfoot{\thepage}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1em} 
+
+\title{Literature Review Notes}
+\author{}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+% TEMPLATE FOR EACH ARTICLE
+\section{Fair Division under Ordinal Preferences: Computing Envy-Free Allocations of Indivisible Goods}
+\label{sec:article1}
+
+\subsection*{Bibliographic Information}
+\begin{itemize}
+    \item \textbf{Authors:} Sylvain Bouveret, Ulle Endriss, Jérôme Lang
+    \item \textbf{Year:} 2010
+    \item \textbf{Domain:} Fair Division, Computational Social Choice
+    \item \textbf{DOI:} 10.3233/978-1-60750-606-5-387
+\end{itemize}
+
+\subsection*{Main Ideas}
+\begin{tcolorbox}[colback=blue!5!white, colframe=blue!50!black]
+The paper studies the fair allocation of indivisible goods among agents when only partial ordinal preferences over individual goods are available with certainty, rather than complete preferences over bundles.
+Agents report strict rankings over individual goods, from which incomplete preferences over bundles are induced. The central question is whether envy-free and/or Pareto efficient allocations can be guaranteed despite this incomplete information.
+\end{tcolorbox}
+
+\subsection*{Research Problem}
+Given:
+\begin{itemize}
+    \item A finite set of indivisible goods
+    \item A finite set of agents with strict ordinal preferences over individual goods
+    \item Induced incomplete preferences over bundles of goods via SCI-nets
+\end{itemize}
+\textbf{Does there exist an allocation that is possibly (necessarily) envy-free?}
+
+\begin{itemize}
+    \item \textbf{Envy-freeness:} Each agent prefers the bundle she received at least as much as any of the bundles received by others.
+    \item \textbf{Pareto efficiency:} No other allocation makes some agents better and none worse off.
+    \item \textbf{Possible envy-freeness (PEF):} An allocation is possibly envy-free if there exists at least one completion of the agents' preferences over bundles that makes the allocation envy-free. More precisely, the allocation is possibly envy-free if there exists a set of complete preferences that are consistent with the incomplete preferences and can complete it to makes the allocation envy-free. For instance, if Alice prefers bundle A and Bob prefers bundle B and C, then an allocation giving A to Alice and B, C to Bob is possibly envy-free as long as Alice did not express her preference for C. 
+    \item \textbf{Necessary envy-freeness (NEF):} An allocation is necessarily envy-free if it is envy-free under all possible completions of the agents' preferences, no matter how the incomplete preferences are completed. For example, if Alice prefers bundle A to B and Bob prefers B, then the allocation "Alice gets A, Bob gets B" is necessarily envy-free since Alice will never envy Bob regardless of her preferences over other bundles.
+\end{itemize}
+
+\textbf{Related Questions and Issues:}
+\begin{itemize}
+    \item Combinatorial explosion: The space of possible bundles grows exponentially with the number of goods, making full preference elicitation infeasible. Indeed, the full elicitation costs cognitively and can lead to uncertainty on the value of the information an agent transmits.
+    \item Computational complexity: What are the computational complexities of checking PEF and NEF? Proof of intractability and tractable cases.
+    \item Algorithmic characterization: Proposals for simple algorithms and hypothesis under which PEF and NEF can be guaranteed.
+\end{itemize}
+
+\subsection*{Hypothesis}
+\begin{itemize}
+    \item Finite set of indivisible goods and agents
+    \item Strict ordinal preferences over individual goods
+    \item Strict partial ordinal preferences over bundles induced via SCI-nets (irreflexive and transitive)
+    \item Strict linear ordinal preferences over bundles in reality (unknown to the mechanism)
+\end{itemize}
+
+\subsection*{Key Words}
+\begin{itemize}
+    \item \textbf{Indivisible goods}
+    \item \textbf{Fair division}
+    \item \textbf{Pairwise dominant}
+    \item \textbf{Incomplete Ordinal preferences}
+    \item \textbf{Envy-freeness}
+    \item \textbf{Pareto efficiency}
+    \item \textbf{Possibly envy-free (PEF)}
+    \item \textbf{Necessarily envy-free (NEF)}
+    \item \textbf{SCI-nets}
+    \item \textbf{Monotonicity}
+\end{itemize}
+
+\subsection*{Notations}
+Under construction
+\begin{itemize}
+    \item $G$: Set of indivisible goods
+    \item $N$: Set of agents
+    \item $g_i$: Good $i$ in $G$
+    \item $A$: Allocation function mapping each agent to a bundle of goods
+    \item $P_i$: Strict ordinal preference relation of agent $i$ over individual goods
+    \item $\succsim_i$: Induced incomplete preference relation of agent $i$ over bundles
+    \item $B_i$: Bundle allocated to agent $i$
+\end{itemize}
+
+\subsection*{Methodology}
+\begin{itemize}
+    \item Expression of preferences is restricted to prevent combinatorial explosion.
+    \item Preferences over bundles are not elicited directly.
+    \item Agents provide strict rankings over individual goods (strict linear order).
+    \begin{itemize}
+        \item Instead of the actual preferences of an agent i on all bundles, we have a strict partial order  $\succ_i$, which represents a partial knowledge of  $\succ_i^*$ obtained by inference.
+    \end{itemize}
+    \item These rankings induce a partial order over bundles. Inference rule (Brams and King, Brams et al): A set A is preferred to a set B if each preference in B not in A is pairwise dominated by a preference of A not in B.
+    \begin{itemize}
+        \item For instance, for $A = \{\text{apple},\text{banana},\text{orange}\}$ and $B = \{\text{apple},\text{strawberry},\text{kiwi}\}$ we have $A \setminus B = \{\text{banana},\text{orange} \}$ and $B \setminus A = \{\text{strawberry},\text{kiwi} \}$. If the agent i prefer banana  $\succ_i$ strawberry and orange  $\succ_i$ kiwi, then each items in A, not in B pairwise dominates each items in B, not in A.
+    \end{itemize}
+    \item SCI-nets provide a compact and structured representation of all compatible complete preferences.
+    \begin{itemize}
+        \item An SCI-net is a special type of CI-net (conditional importance network), a compact representation with no preconditions, where comparisons are only made on individual goods (singletons).
+    \end{itemize}
+    \item Envy-freeness is evaluated across all possible completions.
+\end{itemize}
+
+\subsection*{Key Results}
+\begin{enumerate}
+    \item Determining whether a possibly envy-free allocation exists is computationally easy.
+    \item Determining whether a necessarily envy-free allocation exists is NP-hard.
+    \item For two agents, the NEF problem is solvable in polynomial time.
+    \item Necessary envy-freeness requires strong conditions, such as distinct top-ranked goods.
+\end{enumerate}
+
+\subsection*{Limitations}
+\begin{itemize}
+    \item Preferences are assumed to be strict and monotonic.
+    \item Indifference between goods is not allowed. In this article, the authors consider strict order preferences over individual goods, i.e no equality in the order is possible.
+    \item Only ordinal preferences are considered.
+    \item No comparison with cardinal utility-based fairness notions.
+\end{itemize}
+
+\subsection*{Open Questions}
+\begin{itemize}
+    \item Determining the existence of an envy-freeness allocation which is also necessarily Pareto efficient.
+    \item Extending results to nonstrict SCI-nets to allow indifferences.
+    \item Studying possible/necessary fairness under cardinal preferences.
+    \item Bridging ordinal and cardinal approaches.
+\end{itemize}
+
+\subsection*{Key Ideas for My Research}
+\label{subsec:relevance1}
+\begin{itemize}
+    \item Partial preferences are a realistic modelling assumption.
+    \item A necessarily envy-free allocation is stable to preference incompleteness, as it remains envy-free under all possible completions of the agents' unknown preferences. This fairness property is strong for partial preferences.
+    \item SCI-nets provide a formal framework for reasoning about incomplete preferences.
+\end{itemize}
+\subsection*{Summary}
+This paper provides a foundational framework (definitions, propositions, proofs) for studying fair division under incomplete ordinal preferences. It highlights the trade-off between expressive power, computational tractability, and robustness of fairness guarantees.
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+\textbf{Dimension} & \textbf{Options} \\
+\midrule
+Preference model & ordinal / cardinal \\
+Level of information & complet / partiel \\
+Fairness criteria & envy-free / Pareto \\
+Robustness & possible / necessary \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+
+\newpage
+
+% ADD MORE SECTIONS FOR EACH ARTICLE
+
+\section{Vocabulary}
+\begin{itemize}
+    \item \textbf{Term 1:} Definition
+    \item \textbf{Term 2:} Definition
+    \item \textbf{Term 3:} Definition
+\end{itemize}
+
+\end{document}
