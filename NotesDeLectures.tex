@@ -93,15 +93,32 @@ Given:
 \end{itemize}
 
 \subsection*{Notations}
-Under construction
 \begin{itemize}
-    \item $G$: Set of indivisible goods
-    \item $N$: Set of agents
-    \item $g_i$: Good $i$ in $G$
-    \item $A$: Allocation function mapping each agent to a bundle of goods
-    \item $P_i$: Strict ordinal preference relation of agent $i$ over individual goods
-    \item $\succsim_i$: Induced incomplete preference relation of agent $i$ over bundles
-    \item $B_i$: Bundle allocated to agent $i$
+    \item $G = \{x_1, ..., x_m\}$: Set of indivisible goods $m \geq 1$.
+    \item $N$: Number of agents.
+    \item $A = \{1, ..., n\}$: finite set of n agents $n \geq 2$.
+    \item $\vartriangleright_N$: linear order on $G$ representing the common ranking of goods by all agents.
+    \item $\succ_i^*$: preference relation of agent i over bundles she might receive.
+    \item $\pi : A \rightarrow 2^G$: allocation function assigning to each agent a bundle of indivisible goods.
+    \begin{itemize}
+        \item $\pi(i)\cap \pi(j) = \emptyset$ for all $i,j \in A$ with $i \neq j$: no good is assigned to more than one agent.
+        \item $\bigcup_{i \in A} \pi(i) = G$: complete allocation of all goods.
+    \end{itemize} 
+    \item Binary relation $\succ$ or $\vartriangleright$: relation between goods or bundles.
+    \item strict partial order $\succ$: binary relation that is irreflexive and transitive.
+    \item linear order $\succ$: strict partial order that is complete, i.e $X \succ Y or Y \succ X$ whenever $X \neq Y$ for all $X,Y \in G$.
+    \item Monotonicity: if $Y \subset X$, it implies $X \succ Y$
+    \item Reflexive closure $\succeq$ or $\trianglerighteq$: 
+    \begin{itemize}
+        \item $X \succeq Y$ if and only if $X \succ Y$ or $X = Y$.
+        \item For two binary relations R and R', R' refines R if $ R \subseteq R'$.
+    \end{itemize}
+    \item Compliant: A strict partial order $\succ$ is compliant with $N$, if:
+    \begin{itemize}
+        \item $\succ$ is monotonic.
+        \item $S \cup \{x\} \succ S \cup \{y\}$ for any $x, y$ such that $x \vartriangleright_N y$ and $S \subseteq G \setminus \{x,y\}$.
+    \end{itemize}
+    \item $\succ_N$: is the smallest strict partial order that complies with $N$.
 \end{itemize}
 
 \subsection*{Methodology}
@@ -169,10 +186,279 @@ Robustness & possible / necessary \\
 \end{tabular}
 \end{center}
 
+\section{Handbook of Computational Social Choice (2016) - Chapter 10: Incomplete Information and Communication in Voting }
+\label{sec:article2}
+
+
+\subsection*{Bibliographic Information}
+\begin{itemize}
+    \item \textbf{Authors:} Sylvain Bouveret, Ulle Endriss, Jérôme Lang
+    \item \textbf{Year:} 2010
+    \item \textbf{Domain:} Fair Division, Computational Social Choice
+    \item \textbf{DOI:} 10.3233/978-1-60750-606-5-387
+\end{itemize}
+
+\subsection*{Main Ideas}
+\begin{tcolorbox}[colback=blue!5!white, colframe=blue!50!black]
+
+\end{tcolorbox}
+
+\subsection*{Research Problem}
+Given:
+\begin{itemize}
+    \item
+    \item 
+    \item 
+\end{itemize}
+\textbf{Question: ?}
+
+\textbf{Definitions:}
+
+\textbf{Related Questions and Issues:}
+\begin{itemize}
+    \item 
+    \item 
+\end{itemize}
+
+\subsection*{Hypothesis}
+\begin{itemize}
+    \item 
+    \item 
+    \item 
+    \item 
+\end{itemize}
+
+\subsection*{Key Words}
+\begin{itemize}
+    \item \textbf{}
+    \item \textbf{}
+    \item \textbf{}
+    \item \textbf{}
+    \item \textbf{}
+    \item \textbf{}
+    \item \textbf{}
+    \item \textbf{ }
+    \item \textbf{}
+    \item \textbf{}
+\end{itemize}
+
+\subsection*{Notations}
+Under construction
+\begin{itemize}
+    \item $A = \{a_1, ..., a_m\}$: Set of alternatives representing the space of possible choices.
+    \item $N = \{1, ..., n\}$: Set of n agents/voters.
+    \item $\succ_i$: (total) preference order of each voter $i$ over alternatives in $A$.
+    \begin{itemize}
+        \item $a_i \succ_i a_j$: voter $i$ prefers alternative $a_i$ to $a_j$.
+        \item Compared to a permutation $\sigma_i$ of $A$. 
+        \item $\sigma_i(j)$ denotes the position of alternative $a_j$ in the ranking of voter $i$. Give position $j$.
+        \item $\sigma_i^{-1}(j)$ denotes the alternative ranked at position $j$ by voter $i$. Give alternative $a_j$.
+    \end{itemize}
+    \item $R(A)$: set of all preference orders over $A$.
+    \item $R = \langle \succ_1, ..., \succ_n \rangle $: preference profile, i.e. a tuple of preference orders, one for each voter.
+    \item voting rule or social choice function $f(R) \in A$: selects a winning alternative based on the preference profile $R$. $f(R) \in \arg \max_{a \in A} s(a,R)$.
+    \item Scheme $s(a, R)$: score each alternative $a \in A$ given a preference profile $R$. Measures the quality (social welfare, etc) of an alternative given the profile.
+    \item co-winner: any alternative $a$ with maximum score, i.e. $s(a,R) = \max_{b \in A} s(b,R)$.
+    \item $\pi_i$: partial preference of voter $i$ / partial order of voter $i$ over $A$ / transitive closure of a consistent collection of pairwise comparisons $a_i \succ_i a_k$
+    \item $\Pi = \langle \pi_1, ..., \pi_n \rangle $: partial profile, collection of partial votes.
+    \item completion: any vote $\succ_i$ that extends $\pi_i$.
+    \item $C(\pi_i)$: set of all completions of partial order $\pi_i$.
+    \item $C(\Pi) = C(\pi_1) \times ... \times C(\pi_n)$: set of all completions of partial profile $\Pi$.
+\end{itemize}
+
+\subsection*{Methodology}
+\begin{itemize}
+    \item 
+    \item 
+    \begin{itemize}
+        \item 
+        \item
+    \end{itemize}
+    \item
+    \begin{itemize}
+        \item 
+    \end{itemize}
+    \item 
+\end{itemize}
+
+\subsection*{Key Results}
+\begin{enumerate}
+    \item 
+    \item 
+    \item
+    \item 
+\end{enumerate}
+
+\subsection*{Limitations}
+\begin{itemize}
+    \item 
+    \item 
+    \item 
+\end{itemize}
+
+\subsection*{Open Questions}
+\begin{itemize}
+    \item 
+    \item 
+    \item 
+    \item 
+\end{itemize}
+
+\subsection*{Key Ideas for My Research}
+\label{subsec:relevance2}
+\begin{itemize}
+    \item
+    \item 
+    \item  
+\end{itemize}
+\subsection*{Summary}
+
+% Table summarizing the article along key dimensions
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+\textbf{Dimension} & \textbf{Options} \\
+\midrule
+Preference model & ordinal / cardinal \\
+Level of information & complet / partiel \\
+Fairness criteria & envy-free / Pareto \\
+Robustness & possible / necessary \\
+\bottomrule
+\end{tabular}
+\end{center}
+
 
 \newpage
 
 % ADD MORE SECTIONS FOR EACH ARTICLE
+
+\section{Article 3 Title}
+\label{sec:article3}
+
+\subsection*{Bibliographic Information}
+\begin{itemize}
+    \item \textbf{Authors:} Sylvain Bouveret, Ulle Endriss, Jérôme Lang
+    \item \textbf{Year:} 2010
+    \item \textbf{Domain:} Fair Division, Computational Social Choice
+    \item \textbf{DOI:} 10.3233/978-1-60750-606-5-387
+\end{itemize}
+
+\subsection*{Main Ideas}
+\begin{tcolorbox}[colback=blue!5!white, colframe=blue!50!black]
+
+\end{tcolorbox}
+
+\subsection*{Research Problem}
+Given:
+\begin{itemize}
+    \item
+    \item 
+    \item 
+\end{itemize}
+\textbf{Question: ?}
+
+\textbf{Definitions:}
+
+\textbf{Related Questions and Issues:}
+\begin{itemize}
+    \item 
+    \item 
+\end{itemize}
+
+\subsection*{Hypothesis}
+\begin{itemize}
+    \item 
+    \item 
+    \item 
+    \item 
+\end{itemize}
+
+\subsection*{Key Words}
+\begin{itemize}
+    \item \textbf{}
+    \item \textbf{}
+    \item \textbf{}
+    \item \textbf{}
+    \item \textbf{}
+    \item \textbf{}
+    \item \textbf{}
+    \item \textbf{ }
+    \item \textbf{}
+    \item \textbf{}
+\end{itemize}
+
+\subsection*{Notations}
+Under construction
+\begin{itemize}
+    \item $G$: Set of indivisible goods
+\end{itemize}
+
+\subsection*{Methodology}
+\begin{itemize}
+    \item 
+    \item 
+    \begin{itemize}
+        \item 
+        \item
+    \end{itemize}
+    \item
+    \begin{itemize}
+        \item 
+    \end{itemize}
+    \item 
+\end{itemize}
+
+\subsection*{Key Results}
+\begin{enumerate}
+    \item 
+    \item 
+    \item
+    \item 
+\end{enumerate}
+
+\subsection*{Limitations}
+\begin{itemize}
+    \item 
+    \item 
+    \item 
+\end{itemize}
+
+\subsection*{Open Questions}
+\begin{itemize}
+    \item 
+    \item 
+    \item 
+    \item 
+\end{itemize}
+
+\subsection*{Key Ideas for My Research}
+\label{subsec:relevance3}
+\begin{itemize}
+    \item
+    \item 
+    \item  
+\end{itemize}
+\subsection*{Summary}
+
+% Table summarizing the article along key dimensions
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+\textbf{Dimension} & \textbf{Options} \\
+\midrule
+Preference model & ordinal / cardinal \\
+Level of information & complet / partiel \\
+Fairness criteria & envy-free / Pareto \\
+Robustness & possible / necessary \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+
+\newpage
+
+% ADD MORE SECTIONS FOR EACH ARTICLE
+
 
 \section{Vocabulary}
 \begin{itemize}
