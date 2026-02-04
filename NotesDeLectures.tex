@@ -264,6 +264,20 @@ Under construction
     \item completion: any vote $\succ_i$ that extends $\pi_i$.
     \item $C(\pi_i)$: set of all completions of partial order $\pi_i$.
     \item $C(\Pi) = C(\pi_1) \times ... \times C(\pi_n)$: set of all completions of partial profile $\Pi$.
+    \item Queries for eliciting preferences:
+    \begin{itemize}
+        \item Full ranking queries: ask voter $i$ to provide a complete ranking of all alternatives in $A$.
+        \item Set ranking queries: ask voter $i$ to provide a ranking of a subset of alternatives $S \subseteq A$.
+        \item Top-k queries: ask voter $i$ to provide her top k alternatives from $\succ_i$ for some $1 \leq k \leq |A|$. Setting $k=1$ corresponds to plurality, $k=|A|$ corresponds to the full ranking.
+        \item Bottom-k queries: ask voter $i$ to provide her bottom k alternatives from $\succ_i$ for some $1 \leq k \leq |A|$.
+        \item Next-best alternative queries: ask voter $i$ to provide in sequential order her most preferred alternative among those not yet ranked.
+        \item Pairwise comparision queries: ask voter $i$ to state which of two alternatives, a or a' is preferred to the other.
+        \item Set choice queries: ask voter $i$ to select the most preferred alternative from a subset of alternatives $S \subseteq A$. If $|S|=|A|$, this corresponds to a full ranking query.
+        \item Positional queries: ask voter $i$ to provide the alternative she ranks at a given position t.
+        \item Approval queries: ask voter $i$ to approve a fixed number of alternatives or any number of alternatives. Different from top-k queries as the approval queries do not require to rank the alternatives relative to each other.
+        \item Veto queries: ask voter $i$ to disapprove a fixed number of alternatives or any number of alternatives. The k-veto is equivalent to (m-k)-approval queries with $m=|A|$.
+        \item Split queries: ask voter $i$ to partition a subset of alternatives $S \subseteq A$ into tow or more subsets and order them such that all alternatives in a higher-ranked subset are preferred to all alternatives in a lower-ranked subset. k-approval is a special case where two blocks of size k and m-k are created.
+    \end{itemize}
 \end{itemize}
 
 \subsection*{Methodology}
@@ -332,8 +346,191 @@ Robustness & possible / necessary \\
 
 % ADD MORE SECTIONS FOR EACH ARTICLE
 
-\section{Article 3 Title}
+\section{Survey Jérôme Lang - Collective Decision Making under Incomplete Knowledge: Possible and Necessary Solutions}
 \label{sec:article3}
+
+\subsection*{Bibliographic Information}
+\begin{itemize}
+    \item \textbf{Authors:} Jérôme Lang
+    \item \textbf{Year:} 2020
+    \item \textbf{Domain:} Incomplete preferences, Social Choice, Voting, Computational Social Choice
+    \item \textbf{DOI:} --
+\end{itemize}
+
+\subsection*{Main Ideas}
+\begin{tcolorbox}[colback=blue!5!white, colframe=blue!50!black]
+The survey studies collective decision-making problems under incomplete information about agents' preferences.
+A unifying approach consists in quantifying over all completions of partial preference profiles and defining
+\emph{possible} and \emph{necessary} notions of social outcomes (winners, allocations, equilibria).
+This framework applies across several domains of social choice, including voting, fair division, coalition formation,
+and non-cooperative games, and provides a robustness-oriented view of decision-making under partial knowledge.
+\end{tcolorbox}
+
+\subsection*{Research Problem}
+Given:
+\begin{itemize}
+    \item Agents whose preferences are only partially known.
+    \item A social choice setting (voting, fair division, tournaments, games).
+    \item A criterion or a solution (allocation, winner, fairness, efficiency).
+\end{itemize}
+\textbf{Question: How can collective decisions be defined and computed when agents' preferences are incomplete, and what can be said about the outcomes across all possible completions of the missing information? When can we stop the elicitation process to deduce a solution?}
+
+\textbf{Definitions:}
+
+\textbf{Related Questions and Issues:}
+\begin{itemize}
+    \item Cognitive load and exponential communication burden of expression of preference.
+    \begin{itemize}
+        \item Compact representation of preferences. How can we reduce the quantity of retrieved information to find a possible and/or necessary solution? 
+    \end{itemize}
+    \item Computational complexity induced by the exponential number of completions.
+    \item When incomplete information is too weak to support meaningful conclusions.
+\end{itemize}
+
+\subsection*{Hypothesis}
+\begin{itemize}
+    \item In realistic collective decision-making, assuming that all the preferences are known is untenable.
+    \item 
+    \item 
+    \item 
+\end{itemize}
+
+\subsection*{Key Words}
+\begin{itemize}
+    \item \textbf{Incomplete preferences}
+    \item \textbf{Possible winner}
+    \item \textbf{Necessary winner}
+    \item \textbf{Preference elicitation}
+    \item \textbf{Voting rules}
+    \item \textbf{Fair division}
+    \item \textbf{Responsive extension}
+    \item \textbf{Computational complexity}
+    \item \textbf{Social choice}
+    \item \textbf{ }
+    \item \textbf{}
+    \item \textbf{}
+\end{itemize}
+
+\subsection*{Notations}
+\textbf{Possible and necessary winners in voting:}
+\begin{itemize}
+    \item $N = \{1, ..., n\}$: set of n agents.
+    \item $C = \{c_1, ..., c_m\}$: set of m candidates.
+    \item $R = (\succ_1, ..., \succ_n)$: preference profile of n linear orders over $C$.
+    \item $\succ_i$: linear order of voter i over $C$ called preference relation or vote.
+    \item Property $F$: mapping from preference profile $R$ to a subset of $C$ (e.g Condorcet winner).
+    \begin{itemize}
+        \item Voting rule $F$: the subset of returned candidates is always non empty (e.g plurality).
+        \item Resolute voting rule $F$: the subset of returned candidates is always a singleton.
+    \end{itemize}
+    \item $\triangleright$: priority relation over candidates.
+    \item $P_i$: partial (or incomplete) vote, i.e a strict partial order irreflexive and transitive over $C$.
+    \item $P = (P_1, ..., P_n)$: partial profile of n incomplete votes.
+    \item $R = (\succ_1, ..., \succ_n)$: a complete profile is a completion of partial profile $P$ if for all i $\succ_i$ is a completion of $P_i$.
+    \item Completion $succ_i$ of $P_i$: (complete) vote that contains/satisfies all the preferences in $P_i$ and expresses possibly other preferences to make it complete.
+\end{itemize}
+
+\textbf{Fair division problem of indivisible items:}
+\begin{itemize}
+    \item $N = \{1, ..., n\}$: set of n agents.
+    \item $O = \{o_1, ..., o_m\}$: set of items.
+    \item $\succeq_i$ over $2^O$: preference relation of an agent i.
+    \item $\pi$: allocation that maps each agent to a set of items.
+    \item Indivisible items: $\pi(i) \cap \pi(j) = \emptyset$ for $i \neq j$.
+    \item Envy-freeness: if for all $i,j, \pi(i) \succeq_i \pi(j)$.
+    \item Pareto-efficieny: if there is no $\pi'$ such that
+    \begin{itemize}
+        \item $\pi'(i) \succeq_i \pi(i)$ for all $i$.
+        \item $\pi'(i) \succ_i \pi(i)$ for some $i$.
+    \end{itemize}
+    \item $\triangleright$: an order over O.
+    \item Monotonicity: if $S \subseteq T$ then $T \succeq S$.
+    \item Weakly separable: if $o, o' \neq S$ then $S \cup \{o\} \succeq S \cup \{o'\}$ if and only if $o \triangleright o'$.
+    \item $P = \langle \triangleright_1, ..., \triangleright_n \rangle$ profile of rankings $\triangleright_i$ over O.
+    \item $P* = \langle \succ_1, ..., \succ_n \rangle$: profile of responsive extensions $\succ_i$ of rankings $\triangleright_i$.
+    \item $T = \langle T_1, ..., T_n \rangle$: completion of $P*$, each $T_i$ is a linear order extending $\succ_i$.
+\end{itemize}
+
+\begin{itemize}
+    \item Possible and necessary winners in voting:
+    \begin{itemize}
+        \item 
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Methodology}
+\begin{itemize}
+    \item Preferences are collected incrementally, leading to a sequence of partial profiles
+    \item Formal modeling of incomplete preferences and their completions.
+    \item After each elicitation step, the current partial profile is analyzed to determine:
+    \begin{itemize}
+        \item the set of possible outcomes,
+        \item the set of necessary outcomes,
+        \item whether a decision can already be made
+    \end{itemize}
+    \item If a necessary outcome exists (e.g. a necessary winner under a resolute rule),
+    the elicitation process can be stopped.
+\end{itemize}
+This methodology implicitly couples:
+\begin{itemize}
+    \item preference elicitation,
+    \item reasoning under incomplete information,
+    \item and computational evaluation of criteria.
+\end{itemize}
+
+\subsection*{Key Results}
+\begin{enumerate}
+    \item 
+    \item 
+    \item
+    \item 
+\end{enumerate}
+
+\subsection*{Limitations}
+\begin{itemize}
+    \item Exponential number of completions in general. We cannot consider all the completions to know if there exist necessary solutions/winners.
+    \item Strong incompleteness makes the problem too complex, almost all the candidates are possible winners.
+    \item Strong dependence on modeling assumptions about missing information.
+    \item Parallelizing the elicitation process and the calculation of possible and necessary solutions can introduce complications. If elicitation can only be performed once, it is not possible to follow this model.
+\end{itemize}
+
+\subsection*{Open Questions}
+\begin{itemize}
+    \item How to design elicitation processes guided by possible and necessary outcomes?
+    \item How to handle richer preference models (multi-attribute, multichotomies)?
+    \item How to combine probabilistic and logical approaches to incompleteness?
+\end{itemize}
+
+\subsection*{Key Ideas for My Research}
+\label{subsec:relevance3}
+\begin{itemize}
+    \item 
+    \item 
+    \item  
+\end{itemize}
+\subsection*{Summary}
+
+% Table summarizing the article along key dimensions
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+\textbf{Dimension} & \textbf{Options} \\
+\midrule
+Preference model & ordinal / cardinal \\
+Level of information & complet / partiel \\
+Fairness criteria & envy-free / Pareto \\
+Robustness & possible / necessary \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+
+\newpage
+
+% ADD MORE SECTIONS FOR EACH ARTICLE
+
+\section{Article 4 Title}
+\label{sec:article4}
 
 \subsection*{Bibliographic Information}
 \begin{itemize}
@@ -432,7 +629,7 @@ Under construction
 \end{itemize}
 
 \subsection*{Key Ideas for My Research}
-\label{subsec:relevance3}
+\label{subsec:relevance4}
 \begin{itemize}
     \item
     \item 
@@ -458,6 +655,7 @@ Robustness & possible / necessary \\
 \newpage
 
 % ADD MORE SECTIONS FOR EACH ARTICLE
+
 
 
 \section{Vocabulary}
