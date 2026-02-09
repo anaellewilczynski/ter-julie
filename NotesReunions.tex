@@ -101,4 +101,68 @@ For the next meeting on January 21, 2026, I will continue the state of the art b
 
 \newpage
 
+% ============ RÉUNION 4 ============
+\section{Meeting 4 [03/02/2026]}
+
+\subsection{Agenda}
+\begin{itemize}
+    \item Discussed following the reading of Jerôme Lang's survey and the chapter 10 of the Handbook of Computational Social Choice
+    \item Updating the list of partial preferences
+    \item Understanding the cross-domain aspect of “possible” and “necessary” properties.
+    \item Identifying key papers and resources
+    \item Planning the next meeting
+\end{itemize}
+
+\subsection{Topics Discussed}
+
+To prepare for the meeting, I had started reading the paper the chapter 10 of the Handbook of Computational Social choice and the Jerôme Lang's survey "Collective Decision Making under Incomplete Knowledge:
+Possible and Necessary Solutions" (2020). 
+
+\textbf{Updated list of partial preferences:}
+\begin{enumerate}
+    \item \textbf{Top k preferences:} Agents only rank their top k choices, leaving the rest unranked.
+    \item \textbf{Bottom-k preferences:} Agents only rank their bottom k alternatives, leaving the rest unranked.
+    \item \textbf{Truncated preferences:} Similar to top k preferences, but the ranking is truncated at a specific point. Truncated ballots.
+    \item \textbf{Ordinal preferences:} Agents express their preferences in a ranked order, without specifying the intensity of their preferences. It's a kind of distortion problem with respect to the cardinal preferences.
+    \begin{itemize}
+        \item Ordinal preferences over the set of single goods, induced partial strict linear order over bundles.
+    \end{itemize}
+    \item \textbf{Range/Interval of cardinal preferences:} Agents provide a range of values for each option instead of a single value.
+    \item \textbf{Approval preferences:} Agents indicate if a preference is approved or not, without ranking them. It's a binary indication and can be the result of boolean questions. Agents approve a fixed number of alternatives or any number of alternatives.
+    \item \textbf{Veto preferences:} Agents disapprove a fixed number of alternatives or any number of alternatives. The k-veto is equivalent to (m-k)-approval preferences with m the number of alternatives.
+    \item \textbf{Full ranking preferences:} Agents provide a complete ranking of all alternatives.
+    \item \textbf{Next-best alternative queries:} Agent provide in sequential order her most preferred alternative among those not yet ranked.
+    \item \textbf{Top-k queries:} Agents approve k alternatives and give no order between them. Agents answer sequentially to the question "What are your most preferred alternatives?"
+    \item \textbf{Positional queries:} ask agent to provide the alternative she ranks at a given position t.
+    \item \textbf{Pairwise comparisons:} Agents indicate which of the both options considered is preferred.
+    \item \textbf{Single peak preferences:} Agents have a most preferred option, and their preference decreases as they move away from this peak (unimodal).
+    \item \textbf{Euclidean preferences:} Agents' preferences are represented in a multi-dimensional space, where distance reflects preference intensity.
+    \item \textbf{Subset of possible orders:} Agents provide a subset of possible rankings. The top k is a special case of this type.
+    \item \textbf{Choice queries:} Agents indicate which alternative in a subset S is most preferred. Kind of clustering approach.
+    \item \textbf{Set ranking:} Agents provide a ranking in a subset of alternatives.
+    \item Split queries: ask agent to partition a subset of alternatives into tow or more subsets and order them such that all alternatives in a higher-ranked subset are preferred to all alternatives in a lower-ranked subset. k-approval is a special case where two blocks of size k and m-k are created.
+    \item \textbf{Combinaison of types:} In practice, agents may express their preferences using a combination of the above types. For example, top k with structural aspects (single peak, euclidean).
+    \item \textbf{Incomplete Set of preference profiles:} Only the preference profile of a subset of agents is known.
+    \begin{itemize}
+        \item Application: The votes of nonmanipulators are fully specified, while no information is given for the manipulators.
+    \end{itemize}
+    \item \textbf{Truly incomplete preferences:} ???
+    \item \textbf{Probabilistic preferences:} Agents' preference profile follow a probabilistic distribution. Maximum Likelihood Estimator to estimate the distribution characteristics from a sample of preferences. An alternative can be more likely than others.
+    \item \textbf{Attribute preference:} Agents have different preference profile depending on the attribute considered (politics, economics, immigration).
+\end{enumerate}
+
+We also discussed a few points:
+\begin{itemize}
+    \item Considering only the possible winners and exclude the losers in certain situation without affecting the problem solving.
+    \item Binary axis to represent political affiliation may be simplistic. Unimodal can be limited to describe the reality.
+    \item Multiwinner: avoiding this topic for our state of the art. It is a field in extension.
+\end{itemize}
+
+\subsection{Tasks}
+For the next meeting on February 9, 2026, I will continue the state of the art by searching for articles on partial preferences expressed as intervals.
+I will also prepare the discussion by reading some articles: Kenig et Kimelfeld (2019) on MLE; Pini et al. (2009); Xia and Conitzer (2011b). The objective is to determine whether it is interesting to investigate deeper in these topics and extract research questions.
+I would also like to write my notes neatly.
+\newpage
+
+
 \end{document}
