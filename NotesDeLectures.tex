@@ -529,15 +529,15 @@ Robustness & possible / necessary \\
 
 % ADD MORE SECTIONS FOR EACH ARTICLE
 
-\section{Article 4 Title}
+\section{Mathematical Social Sciences - Computational Complexity of necessary envy-freeness (2024)}
 \label{sec:article4}
 
 \subsection*{Bibliographic Information}
 \begin{itemize}
-    \item \textbf{Authors:} Sylvain Bouveret, Ulle Endriss, Jérôme Lang
-    \item \textbf{Year:} 2010
+    \item \textbf{Authors:} Haris Aziz, Ildikó Schlotter, Toby Walsh
+    \item \textbf{Year:} 2024
     \item \textbf{Domain:} Fair Division, Computational Social Choice
-    \item \textbf{DOI:} 10.3233/978-1-60750-606-5-387
+    \item \textbf{DOI:} --
 \end{itemize}
 
 \subsection*{Main Ideas}
@@ -548,14 +548,30 @@ Robustness & possible / necessary \\
 \subsection*{Research Problem}
 Given:
 \begin{itemize}
-    \item
-    \item 
-    \item 
+    \item A finite set of N agents
+    \item A finite set of indivisible goods I
+    \item A collection of preferences lists for each agent L
 \end{itemize}
 \textbf{Question: ?}
 
 \textbf{Definitions:}
+\begin{itemize}
+    \item Complete allocation: An allocation is complete if each item is assigned to some agent. It can be seen as a partitioning of the items into $|N|$ bundles with each bundle corresponding to an agent's allocation. Each agent receives a bundle of objects (can be empty).
+    \item Additive valuation: way to measure the value of a bundle by summing the values of each object in the bundle. An additive valuation is consistent with the ordinal preferences if it respects the order specified by the agent.
+    \item Envy freeness: An agent has no envy, even if she knows the preferences of the others, she does not prefer the allocated bundle of other agents to her own bundle.
+    \item Necessary envy-freeness: allocation that is envy free for all additive valuations consistent with the ordinal preferences. Whatever the way we attribute values to the items, as long as we respect the order of preferences, the allocation is envy free. Whatever the way the preferences of other agents change, the agent does not envy the others.
+    \item Responsive set extension: extension method for completing partial information. From ordinal preferences over single items, deduces preferences over bundles. A bundle is preferred to another if it exists an injection for which each item of the first bundle is preferred to the corresponding item of the second bundle.
+\end{itemize}
 
+\textbf{Properties:}
+\begin{itemize}
+    \item An allocation is NEF if and only if $|[ L^{A}(1:i) \cap \pi^{-1}(A) ]| \geq |[ L^{A}(1:i) \cap \pi^{-1}(B) ]|$ for each pair of distinct agents A and B and index $i \in [|I|]$. In other words, an allocation is NEF for an agent A if the agent A receives more items than any other agent B among its top i preferred items for all i. If A does not envy B, then for each item that B gets and that A wishes to have, A receives an item that A prefers even more. If for all i the inequality is satisfied, then the allocation is NEF and complete. If the inequality is satisfied for a given i, then the allocation satisfies the NEF condition for this preference prefix (i.e the i first preferred items), but it does not ensure the NEF for the complete allocation. If the inequality is proved for a larger i, it does not ensure the satisfability of the inequality for a smaller i. If the inequality is satisfied for one i, the allocation is NEF restricted to the i first preferred items.
+\end{itemize}
+
+\textbf{Personal reflection:}
+At each time, I have the impression that an allocation is given in input and we have to decide if it is NEF. Building directly a NEF allocation is equivalent to questioning the existence of a NEF solution, implying the consideration of all the possible allocations.
+Maybe we can determine a restricted NEF allocation and try to complete it to a complete NEF allocation.
+In a previous article, we have seen that some combinaison of items are inefficient or not desirable. For example, an agent receives a plane ticket and a train ticket for the same destination, the same day. In the same vein, it can be possible to guess preference of an agent depending on similar profile (like in recommendation systems). For example, if someone prefers action movies to comedy movies, we can guess that this person prefers also adventure movies because another agent have the same preference for action and comedy movies and prefers adventure movies. Hence, the idea is to group the preferences by category. 
 \textbf{Related Questions and Issues:}
 \begin{itemize}
     \item 
@@ -585,9 +601,16 @@ Given:
 \end{itemize}
 
 \subsection*{Notations}
-Under construction
+
 \begin{itemize}
-    \item $G$: Set of indivisible goods
+    \item $N$: Set of agents.
+    \item $I$: Set of indivisible goods.
+    \item $A \in N$: an agent.
+    \item $L$: collection of preference lists for each agent. Similar structure as the scoring vector described in the article of Kenig and Kimelfeld.
+    \item $L^{A}$: preference list of agent A, which is a strict linear order over the set of items I.
+    \item $\pi$: assignment/allocation of items to agents. $\pi(i)$ returns the agent to which item i is allocated.
+    \item $\pi^{-1}(A)$: set of items allocated to agent A.
+    \item $(N,I,L)$: instance of the problem.
 \end{itemize}
 
 \subsection*{Methodology}

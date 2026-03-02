@@ -194,7 +194,7 @@ The objective is to identify potential gaps in the literature that could lead to
 
 \subsection{Topics Discussed}
 
-To prepare for the meeting, I had started reading the paper the chapter 10 of the Handbook of Computational Social choice and the Jerôme Lang's survey "Collective Decision Making under Incomplete Knowledge:
+To prepare for the meeting, I had started reading the paper the chapter 10 of the Handbook of Computational Social Choice and the Jerôme Lang's survey "Collective Decision Making under Incomplete Knowledge:
 Possible and Necessary Solutions" (2020). 
 
 \textbf{Updated list of partial preferences:}
@@ -219,7 +219,7 @@ Possible and Necessary Solutions" (2020).
     \item \textbf{Subset of possible orders:} Agents provide a subset of possible rankings. The top k is a special case of this type.
     \item \textbf{Choice queries:} Agents indicate which alternative in a subset S is most preferred. Kind of clustering approach.
     \item \textbf{Set ranking:} Agents provide a ranking in a subset of alternatives.
-    \item Split queries: ask agent to partition a subset of alternatives into tow or more subsets and order them such that all alternatives in a higher-ranked subset are preferred to all alternatives in a lower-ranked subset. k-approval is a special case where two blocks of size k and m-k are created.
+    \item \textbf{Split queries:} ask agent to partition a subset of alternatives into tow or more subsets and order them such that all alternatives in a higher-ranked subset are preferred to all alternatives in a lower-ranked subset. k-approval is a special case where two blocks of size k and m-k are created.
     \item \textbf{Combinaison of types:} In practice, agents may express their preferences using a combination of the above types. For example, top k with structural aspects (single peak, euclidean).
     \item \textbf{Incomplete Set of preference profiles:} Only the preference profile of a subset of agents is known.
     \begin{itemize}
@@ -350,21 +350,102 @@ If time permits, I will also explore envy-freeness properties for partial prefer
 
 \subsection{Agenda}
 \begin{itemize}
-    \item Discussion of recent readings on responsive set extensions
+    \item Discussion of recent readings on responsive set extensions and envy-freeness
+    \item Identification of potential research directions
     \item Planning the next meeting
 \end{itemize}
 
 \subsection{Topics Discussed}
 
-To prepare for the meeting, I had started reading 
-We have enough material to write the state of the art.
-We are looking for a research question now
+To prepare for the meeting, I began reading the article 
+``Computational Complexity of Necessary Envy-Freeness'' by Aziz et al. (2024).
 
-During the meeting, ...
+Before discussing the article in detail, we reviewed the main research questions that have already been addressed in the literature and that are related to our topic.
+\paragraph{Existence and complexity of envy-freeness.}
+The problem of checking whether there exists a complete necessary envy-free (NEF) allocation is NP-complete in general, and polynomial-time solvable when there are only two agents. 
+In contrast, checking the existence of a complete possible envy-free (PEF) allocation is computationally tractable.
+Related work also studies envy-freeness for bundles induced by ordinal preferences ("Fair Division under Ordinal Preferences: Computing Envy-Free Allocations of Indivisible Goods" by Bouveret et al.).
+
+\paragraph{Possible and necessary winner problems.}
+Given a partial voting profile and a positional scoring rule:
+\begin{itemize}
+    \item The \textit{possible winner problem} asks whether a given candidate can win in at least one completion of the profile. This problem is NP-complete in general, but polynomial-time solvable for specific rules such as plurality and veto.
+    \item The \textit{necessary winner problem} asks whether a candidate wins in every completion of the partial profile. This problem is polynomial-time solvable for all positional scoring rules.
+\end{itemize}
+
+\paragraph{Winning probability problem.}
+Another related line of work studies the computational complexity of estimating the probability of an election outcome under uncertainty (e.g., Kenig and Kimelfeld, 2019).
+
+\paragraph{Inference rules for bundle preferences.}
+Several works analyze how preferences over bundles can be inferred from preferences over single goods. In particular, inference rules based on linear orders over single goods have been studied (e.g., Brams and King; Brams et al.).
+
+At this stage, we have sufficient material to write a structured state of the art. The focus of the meeting shifted toward identifying a clear research question.
+
+\subsection*{Discussion on Aziz et al. (2024)}
+
+During the meeting, we discussed the approach taken by Aziz et al. to describe the envy freeness properties. 
+More precisely, an agent is said to prefer one bundle to another if each item in the second bundle can be matched to a distinct item in the first bundle that the agent strictly prefers. 
+In other words, the agent can pair every item in the less preferred bundle with a strictly better item in the other bundle.
+
+The extension of preferences induced partial preferences, which should be included in our state of the art.
+
+\subsection*{Clones and Structured Preferences}
+
+We then discussed the notion of \textit{clones}, as mentioned in the survey by Jérôme Lang.
+Two alternatives are considered clones if they always appear consecutively in preference rankings (although possibly in different internal orders across agents).
+Importantly, no external alternative can appear between them.
+\\For instance, in a political election context, two ideologically close candidates may behave as clones: they always appear consecutively in voters’ rankings, although their internal order may vary across voters.
+
+The notion of clones is particularly interesting for our project because it suggests a structural form of indeterminacy that is conceptually close to interval-based representations.
+
+This led to the following perspective:
+
+Suppose that objects can be partitioned into categories (or groups), where objects within the same group are substitutes. 
+For example, train and plane tickets to the same destination may be substitutable, whereas a train ticket and a hotel booking may be complementary. If we allocate together the train ticket and the hotel booking, the bundle will have more impact than if we allocate the train ticket with the plane ticket.
+
+Hence, we consider the following structured model:
+\begin{itemize}
+    \item Agents have strict linear preferences over single objects.
+    \item The set of objects is partitioned into $k$ groups $M_1, \dots, M_k$ with $k \ge 1$.
+    \item Objects within each group $M_j$ are clones: they appear consecutively in each agent's ranking, though possibly in different internal orders.
+    \item The ranking between groups is known.
+    \item The internal ranking within each group is unknown.
+\end{itemize}
+
+This framework can be interpreted as a structured form of partial preferences.
+It generalizes the baseline case (ordinal preference profile) in which each group contains exactly one object.
+
+An open question is whether this model corresponds to an already studied form of partial preference representation.
+
+\paragraph{Resulting questions.}
+\begin{itemize}
+    \item Under clone-group structured partial preferences, what is the complexity of checking existence of NEF allocation?
+    \item Does clone-group structure make the NEF problem tractable?
+    \item Does clone-group uncertainty behave similarly to matching uncertainty?
+\end{itemize}
+
+\subsection*{Connections with Matching Theory}
+
+We briefly discussed potential links with matching theory.
+
+\paragraph{Stable matching.}
+In the stable marriage setting, instability arises when a student and a university prefer each other to their assigned partners.
+
+\paragraph{Popular matching.} 
+A matching A is popular if there is not exist another matching A' such as the number of agents who prefer the matching A' is superior to the number of agents who prefer the matching A.
+A popular matching does not always exist, and its existence must be characterized.
+
+The matching is a bijection between the set of agents and the set of objects. In our model, the set of object is divisible into |N| groups (a group can be empty).
+
+Matching problems may provide useful tools for analyzing allocations under structured partial preferences.
 
 \subsection{Tasks}
-For the next meeting on March 9, 2026, I will co
-I would also like to write my notes neatly.
+For the next meeting on March 9, 2026:
+\begin{itemize}
+    \item Study the literature on popular matchings.
+    \item Investigate the notion of cloning in more detail, starting from the relevant section in Jérôme Lang’s survey.
+    \item Upload structured notes and begin drafting the state of the art.
+\end{itemize}
 \newpage
 
 
