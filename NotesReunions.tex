@@ -4,6 +4,8 @@
 \usepackage{fancyhdr}
 \usepackage{hyperref}
 \usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
 
 \geometry{margin=2.5cm}
 \pagestyle{fancy}
@@ -101,8 +103,85 @@ For the next meeting on January 21, 2026, I will continue the state of the art b
 
 \newpage
 
+
+% ============ RÉUNION 3 ============
+\section{Meeting 3 [21/01/2026] - Cancelled}
+
+\subsection{Agenda}
+\begin{itemize}
+    \item Setting up the LaTeX environment
+    \item Writing the notes of the previous meetings
+    \item Creating a document to centralize my reading notes
+    \item Planning the next meeting
+\end{itemize}
+
+\subsection{Topics Discussed}
+
+To prepare for the meeting, I had started reading the paper ''Fair Division under Ordinal Preferences: Computing Envy-Free Allocations of Indivisible Goods''.
+This article studies ordinal preferences over indivisible goods and relates to concepts discussed during the previous meeting.
+
+In particular, the authors derive partial preferences over bundles from the assumption that agents specify ordinal preferences over all individual goods.
+The rest of the paper studies fairness criteria, especially envy-freeness and Pareto efficiency, under this preference model.
+
+During this week, I became familiar with the concepts of Necessary Envy-Freeness (NEF) and Possible Envy-Freeness (PEF), which involve strong properties for the solutions of the problem.
+
+I also started paying closer attention to the mathematical notations used in the papers in order to better understand and formalize the concepts.
+
+\subsection{Tasks}
+For the next meeting on January 29, 2026, I will continue the state of the art by searching for articles on partial preferences.
+In parallel, I will learn how to write mathematical formulas in Latex.
+\newpage
+
+
 % ============ RÉUNION 4 ============
-\section{Meeting 4 [03/02/2026]}
+\section{Meeting 4 [29/01/2026]}
+
+\subsection{Agenda}
+\begin{itemize}
+    \item Monitoring progress on the state of the art
+    \item Writing the notes of the previous meetings and readings
+    \item Planning the next meeting
+\end{itemize}
+
+\subsection{Topics Discussed}
+
+To prepare for the meeting, I had started reading Chapter 10 of the Handbook of Computational Social Choice.
+
+During the meeting, we discussed several points that I had highlighted, especially the following open questions:
+\begin{itemize}
+    \item Coalitional manipulation problem: can it be related to a partial preference framework?
+    \item Truly incomplete preferences: what does this mean? Is it an elicitation problem or a problem of uncertainty? This notion was studied by Pini et al. (2009) and Xia and Conitzer (2011b).
+\end{itemize}
+
+The first question refers to Chapter 2 of the Handbook of Computational Social Choice, which studies coalition formation.
+More precisely, agents can be grouped into coalitions with shared or compatible preferences.
+This allows a more compact representation of preferences.
+However, this perspective goes beyond the current scope of our study.
+
+This led to a broader discussion on hedonic games, where agents form coalitions and have preferences within the coalitions they belong to.
+This can be viewed as a restriction on the set of possible preferences.
+We noted that this connects to our broader reflection on partial preferences and structured preference domains.
+We also discussed the possibility of contributing to related questions later in the project.
+
+In our study, once a clear research question is identified, we will formulate assumptions on the structure of the available information, without questioning us on the elicitation process itself.
+Hedonic games provide an example of structured or restricted preference domains that can be interpreted as a form of partial preference information.
+In addition, agents may classify other agents into categories such as friends, enemies, or unknown agents.
+
+The second question requires further exploration.
+
+We also discussed preference distribution models, including Impartial Culture and the Polya-Eggenberger urn model.
+Under Impartial Culture, each ranking is equally likely to represent an agent's preferences and is independent from each other.
+In contrast, in the Polya-Eggenberger urn model, the probability of a ranking being drawn is proportional to the number of times it has already been drawn. More precisely, the urn model is a random draw with replacement of $\alpha$ copies.
+This model allows us to capture the idea that some rankings are more likely than others, which is often the case in real-world scenarios. It describes correlated preferences.
+
+\subsection{Tasks}
+
+For the next meeting on February 3, 2026, I will continue the state of the art by studying the survey by Jérôme Lang and continuing the reading of Chapter 10 of the Handbook of Computational Social Choice.
+The objective is to identify potential gaps in the literature that could lead to a research question.
+
+\newpage
+
+\section{Meeting 5 [03/02/2026]}
 
 \subsection{Agenda}
 \begin{itemize}
@@ -161,6 +240,130 @@ We also discussed a few points:
 \subsection{Tasks}
 For the next meeting on February 9, 2026, I will continue the state of the art by searching for articles on partial preferences expressed as intervals.
 I will also prepare the discussion by reading some articles: Kenig et Kimelfeld (2019) on MLE; Pini et al. (2009); Xia and Conitzer (2011b). The objective is to determine whether it is interesting to investigate deeper in these topics and extract research questions.
+I would also like to write my notes neatly.
+\newpage
+
+
+% ============ RÉUNION 6 ============
+\section{Meeting 6 [09/02/2026]}
+
+\subsection{Agenda}
+\begin{itemize}
+    \item Discussion of recent readings
+    \item Planning the next step and future meeting
+\end{itemize}
+
+\subsection{Topics Discussed}
+
+To prepare for the meeting, I conducted a brainstorming session to identify key concepts, reflections, and questions arising from my recent readings and from previous discussions. The following points were noted:
+\begin{itemize}
+    \item Agents can be partially known.
+    \item Some voting rules cannot be defined solely as a function of a voter's ranking. This is the case for approval voting and range voting, which require additional information beyond a strict ordinal ranking.
+    \item Mallows Ranking Models: probabilistic frameworks for modeling and analyzing rankings.
+    \item Complete preference information is not always necessary to reach a decision. A key question is determining how much information, or which structural properties, are sufficient to conclude. This motivates the study of \textit{necessary} and \textit{possible} outcomes. Instead of considering all allocations, one can restrict attention to possible allocations, and further to necessary allocations, thereby reducing the search space by excluding impossible solutions.
+    \item It is sometimes possible to translate preferences from one representation to another. For example, ordinal preferences can be derived from cardinal preferences, although this transformation results with a loss of information.
+    \item The notion of an interval representation requires clarification. In particular, it is important to understand how intervals relate to linear orders, and whether an interval representation such as $[a,b,c]$ can be interpreted as a weak order (e.g., $a \succeq b \succeq c$) or whether it conveys fundamentally different information.
+\end{itemize}
+
+I then continued the state-of-the-art review by skimming the article by Kenig and Kimelfeld (2019), as well as the article "Representing Preferences Using Intervals" by Öztürk, Pirlot, and Tsoukiàs (2011).
+
+The first article studies positional scoring rules under probabilistic voting models, in particular when preferences are incomplete. The authors consider two probabilistic models: a uniform distribution over all completions of a partial voting profile, and the Repeated Insertion Model (RIM). Each voter is associated with a scoring vector that assigns points to candidates depending on their position in the ranking.
+
+\begin{itemize}
+    \item \textbf{Plurality rule:} the vector contains a 1 for the most preferred alternative and 0 for all others.
+    \item \textbf{Borda rule:} the vector contains $m-1$ points for the most preferred alternative, $m-2$ for the second most preferred alternative, and so on down to 0 for the least preferred alternative. Candidate receives points depending on its rank in each voter's preference list, and the candidate with the highest total score wins.
+    \item \textbf{k-approval rule:} the vector contains $k$ entries equal to 1 for the top $k$ the approved alternatives and $m-k$ entries equal to 0 for the disapproved alternatives.
+\end{itemize}
+
+Using these scoring vectors, the authors analyze the computational complexity of estimating the probability of an election outcome under uncertainty. Their analysis relies on structural properties of voting rules, in particular the notions of \textit{pure} and \textit{almost constant} scoring rules.
+
+A voting rule is \textit{pure} if the scoring vector for $m$ candidates can be obtained from the scoring vector for $m-1$ candidates by inserting a score for the new candidate without affecting the score of the other candidates. All the previously mentioned rules satisfy this property.
+
+A voting rule is \textit{almost constant} if its scoring vector contains $m-K$ identical scores for some fixed constant $K$. In other words, only a fixed number of candidates receive distinct scores, while the remaining candidates share the same score. The Borda rule does not satisfy this property.
+
+An open question discussed during the meeting was whether the notion of almost constant scoring rules can be extended to preference representations based on intervals.
+
+More broadly, the article expresses the incompleteness/partial preferences and the probability as subfields of the uncertainty.
+
+
+\begin{tcolorbox}[colback=yellow!5!white, colframe=yellow!50!black]
+Memo: Do not confuse partial profile with partial vote.
+\begin{itemize}
+    \item \textbf{Partial profile:} all partial votes of voters.
+    \item \textbf{Partial vote:} partial preferences of a single voter.
+\end{itemize}
+\end{tcolorbox}
+
+The second article provided a different perspective on preference representation using semiorders (i.e interval orders). Several observations were noted:
+\begin{itemize}
+    \item \textbf{Luce's cup of coffee:} small differences in utility may not be distinguishable, even though larger differences are meaningful. This motivates interval-based representations of preferences. More illustratively, there is no difference between a little more sugar and no sugar at all. However, it is preferable to have more sugar than not at all to soften the bitter taste of coffee.
+    \item \textbf{Transitivity:} indifference is not necessarily transitive in semiorders. An agent may be indifferent between $a$ and $b$, and between $b$ and $c$, without being indifferent between $a$ and $c$. This is an important consideration when working with interval representations.
+    \item \textbf{Fishburn's classification:} Fishburn identifies nine types of semiorders, providing a theoretical framework for studying such representations.
+\end{itemize}
+However, during the meeting, we decided not to include this article in the state of the art, as its definition of intervals differs from the one relevant to our project. In our work, intervals are considered in the context of responsive set extensions.
+
+To illustrate the concept of responsive set extension, we consider a set of objects with cardinal utilities:
+
+\begin{tabular}{|p{5cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|}
+    \hline
+    objects & $o_1$ & $o_2$ & $o_3$ & $o_4$ \\
+    \hline
+    cardinal preferences & 10 & 9 & 8 & 7 \\
+    \hline
+    strict ordinal preference & \multicolumn{4}{|c|}{ $o_1 \succ o_2 \succ o_3 \succ o_4$ } \\
+\end{tabular}
+
+From this ranking, we can conclude, for example, that: $\{o_1, o_2\} \succ \{o_3,o_4\}$
+
+However, some bundle comparisons remain undetermined, such as between $\{o_1, o_4\}$ and other bundles.
+
+The objective is to give a formal interpretation to the following representation:
+
+\begin{tabular}{ |p{5cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|  }
+    \hline
+    objects & $o_1$ & $o_2$ & $o_3$ & $o_4$ \\
+    \hline
+    intervals & $[5,8]$ & $[6,7]$ & $[4,7]$ & $[8, 10]$ \\
+    \hline
+    deduced ordinal preferences & 5 & 7 & 6 & 8 \\
+     \hline
+\end{tabular}
+
+Using these intervals, the value of bundles may be obtained by summing interval bounds. For example:
+\\ $v(\{o_1, o_2\}) \in [5+6, 8+7] = [11, 15]$
+\\ $v(\{o_1, o_3\}) \in [5+4, 8+7] = [9, 15] $
+\\ $v(\{o_3, o_4\}) \in [4+8, 7+10] = [12, 17] $
+
+However, not all values within an interval are equally plausible, as some combinations of individual utilities may be more likely than others. For instance, the values 6+6 = 12 and 5+7 = 12 for the bundle $\{o_1, o_2\}$.
+
+From this representation, the evaluation of possible/necessary envy-freeness or other properties is enabled.
+
+
+\subsection{Tasks}
+For the next meeting on February 20, 2026, I will continue the state-of-the-art review by studying responsive set extensions, in particular the articles by Aziz et al. (2024) and Barberà et al. (2001).
+
+If time permits, I will also explore envy-freeness properties for partial preferences under other contexts.
+\newpage
+
+% ============ RÉUNION 7 ============
+\section{Meeting 7 [20/02/2026]}
+
+\subsection{Agenda}
+\begin{itemize}
+    \item Discussion of recent readings on responsive set extensions
+    \item Planning the next meeting
+\end{itemize}
+
+\subsection{Topics Discussed}
+
+To prepare for the meeting, I had started reading 
+We have enough material to write the state of the art.
+We are looking for a research question now
+
+During the meeting, ...
+
+\subsection{Tasks}
+For the next meeting on March 9, 2026, I will co
 I would also like to write my notes neatly.
 \newpage
 
