@@ -536,68 +536,106 @@ Robustness & possible / necessary \\
 \begin{itemize}
     \item \textbf{Authors:} Haris Aziz, Ildikó Schlotter, Toby Walsh
     \item \textbf{Year:} 2024
-    \item \textbf{Domain:} Fair Division, Computational Social Choice
-    \item \textbf{DOI:} --
+    \item \textbf{Domain:} Fair Division, Computational Social Choice, NEF
+    \item \textbf{DOI:} https://doi.org/10.1016/j.mathsocsci.2023.08.002
 \end{itemize}
 
 \subsection*{Main Ideas}
 \begin{tcolorbox}[colback=blue!5!white, colframe=blue!50!black]
-
+This paper investigates the computational difficulty of finding fair allocations of indivisible goods when agents' preferences are only partially known. 
+Instead of assuming precise numerical utilities, agents provide ordinal rankings over individual items, which are then used to derive consistent preferences over bundles of items. 
+This framework allows the authors to study the fairness notion of necessary envy-freeness under incomplete preference information. 
+The main contribution of the paper is a complexity analysis of the problem of determining whether such an allocation exists, showing that it becomes computationally intractable with three or more agents while remaining tractable in the case of two agents.
 \end{tcolorbox}
+
+
+\subsection*{Contribution of the Paper}
+
+\begin{itemize}
+\item Formalization of the ExistsNEF decision problem.
+\item Characterization of NEF allocations via prefix inequalities.
+\item Proof that ExistsNEF is NP-complete for three or more agents.
+\item Identification of tractable cases (e.g., two agents).
+\end{itemize}
 
 \subsection*{Research Problem}
 Given:
 \begin{itemize}
-    \item A finite set of N agents
-    \item A finite set of indivisible goods I
-    \item A collection of preferences lists for each agent L
+    \item A finite set of agents $N$
+    \item A finite set of indivisible goods $I$
+    \item A collection of preferences lists for each agent $L$
 \end{itemize}
-\textbf{Question: ?}
+\textbf{Question: Does there exist a complete allocation of the items to the agents that satisfies the property of necessary envy-freeness?}
 
 \textbf{Definitions:}
 \begin{itemize}
-    \item Complete allocation: An allocation is complete if each item is assigned to some agent. It can be seen as a partitioning of the items into $|N|$ bundles with each bundle corresponding to an agent's allocation. Each agent receives a bundle of objects (can be empty).
-    \item Additive valuation: way to measure the value of a bundle by summing the values of each object in the bundle. An additive valuation is consistent with the ordinal preferences if it respects the order specified by the agent.
-    \item Envy freeness: An agent has no envy, even if she knows the preferences of the others, she does not prefer the allocated bundle of other agents to her own bundle.
-    \item Necessary envy-freeness: allocation that is envy free for all additive valuations consistent with the ordinal preferences. Whatever the way we attribute values to the items, as long as we respect the order of preferences, the allocation is envy free. Whatever the way the preferences of other agents change, the agent does not envy the others.
-    \item Responsive set extension: extension method for completing partial information. From ordinal preferences over single items, deduces preferences over bundles. A bundle is preferred to another if it exists an injection for which each item of the first bundle is preferred to the corresponding item of the second bundle.
+    \item \textbf{Complete allocation:} 
+An allocation is complete if every item is assigned to some agent.  
+Formally, this corresponds to partitioning the set of items into $|N|$ bundles, where each bundle represents the set of items allocated to an agent (Bundles may be empty).
+    \item \textbf{Additive valuation:} 
+An additive valuation assigns a numerical value to each item, and measures the value of a bundle by summing the values of the items it contains.  
+An additive valuation is consistent with the ordinal preferences of an agent if it respects the ranking of items in the preference list.
+    \item \textbf{Envy freeness (EF):} 
+An allocation is envy-free if no agent prefers the bundle allocated to another agent over her own bundle.
+    \item \textbf{Necessary envy-freeness (NEF):} 
+An allocation is necessarily envy-free if it is envy-free for all additive valuations that are consistent with the agents' ordinal preferences. 
+In other words, whatever the way we attribute values to the items, as long as we respect the order of preferences, the allocation is envy free. Whatever the way the preferences of other agents change, the agent does not envy the others.
+    \item \textbf{Responsive set extension:} 
+This is a method for extending preferences over single items to preferences over bundles. 
+Under this extension, a bundle is preferred to another if every item in the second bundle can be associated via an injection with a distinct item in the first bundle that the agent strictly prefers.
+    \item \textbf{Envy-Free up to One Item (EF1):}
+An allocation satisfies EF1 if, for every pair of agents, any envy disappears after removing at most one item from the bundle of the envied agent.
+    \item \textbf{Necessary Envy-Free up to One Item (NEF1):}
+An allocation satisfies NEF1 if it is EF1 for all additive valuations consistent with the ordinal preferences.  
+In other words, even under the worst-case valuation compatible with the rankings, any envy between agents can be eliminated by removing a single item from the bundle of the envied agent.
 \end{itemize}
 
-\textbf{Properties:}
-\begin{itemize}
-    \item An allocation is NEF if and only if $|[ L^{A}(1:i) \cap \pi^{-1}(A) ]| \geq |[ L^{A}(1:i) \cap \pi^{-1}(B) ]|$ for each pair of distinct agents A and B and index $i \in [|I|]$. In other words, an allocation is NEF for an agent A if the agent A receives more items than any other agent B among its top i preferred items for all i. If A does not envy B, then for each item that B gets and that A wishes to have, A receives an item that A prefers even more. If for all i the inequality is satisfied, then the allocation is NEF and complete. If the inequality is satisfied for a given i, then the allocation satisfies the NEF condition for this preference prefix (i.e the i first preferred items), but it does not ensure the NEF for the complete allocation. If the inequality is proved for a larger i, it does not ensure the satisfability of the inequality for a smaller i. If the inequality is satisfied for one i, the allocation is NEF restricted to the i first preferred items.
-\end{itemize}
+\textbf{Proposition 1:} 
+An allocation is NEF if and only if $|[ L^{A}(1:i) \cap \pi^{-1}(A) ]| \geq |[ L^{A}(1:i) \cap \pi^{-1}(B) ]|$ for every pair of distinct agents $A$ and $B$, and every index $i \in [|I|]$.
+Intuitively, for every prefix of the preference ranking of agent $A$, the number of items among the first $i$ preferred items that are allocated to $A$ must be at least as large as the number allocated to any other agent $B$. 
+In other words, an allocation is NEF for an agent A if the agent A receives more items than any other agent B among its top i preferred items for all i. 
+If A does not envy B, then for each item that B gets and that A wishes to have, A receives an item that A prefers even more. 
 
-\textbf{Personal reflection:}
-At each time, I have the impression that an allocation is given in input and we have to decide if it is NEF. Building directly a NEF allocation is equivalent to questioning the existence of a NEF solution, implying the consideration of all the possible allocations.
-Maybe we can determine a restricted NEF allocation and try to complete it to a complete NEF allocation.
-In a previous article, we have seen that some combinaison of items are inefficient or not desirable. For example, an agent receives a plane ticket and a train ticket for the same destination, the same day. In the same vein, it can be possible to guess preference of an agent depending on similar profile (like in recommendation systems). For example, if someone prefers action movies to comedy movies, we can guess that this person prefers also adventure movies because another agent have the same preference for action and comedy movies and prefers adventure movies. Hence, the idea is to group the preferences by category. 
+If this inequality holds for all values of $i$, the allocation is necessarily envy-free and complete. 
+If the inequality holds only for a given prefix size $i$, the NEF condition is satisfied only with respect to that prefix, but not necessarily for the entire allocation.
+If the inequality is proved for a larger i, it does not ensure the satisfability of the inequality for a smaller i. 
+
 \textbf{Related Questions and Issues:}
 \begin{itemize}
-    \item 
-    \item 
+    \item Sometimes, it is not possible to prevent any envy. 
+In many situations, strict envy-freeness cannot be achieved.  
+Therefore, weaker notions such as EF1 and NEF1 are often considered.
+    \item The decision problem ExistsNEF is NP-complete.  
+Consequently, researchers investigate restricted cases in which the problem becomes computationally tractable.
+\end{itemize}
+
+\subsection{Personal reflection}
+\begin{itemize}
+    \item The formulation of the problem often gives the impression that an allocation is provided as input and the task is to verify whether it satisfies NEF.  
+However, constructing a NEF allocation from scratch corresponds to solving the \textit{existence} problem, which implicitly requires considering all possible allocations.
+    \item Authors: One possible approach could be to construct a partial allocation satisfying the NEF constraints and then attempt to extend it to a complete allocation.
+    \item In previous readings, some combinations of items appear inefficient or undesirable.  
+For example, allocating both a plane ticket and a train ticket to the same destination on the same day to the same agent may be redundant.
+    \item This observation suggests that items could be grouped into categories.  
+Similarly, in recommendation systems, preferences can sometimes be inferred from similar profiles.  
+For example, if two agents share similar preferences between action and comedy movies, and one of them prefers adventure movies, this information might help infer the preferences of the other agent.
+
+This motivates the idea of grouping items or preferences by categories.
+    \item Since the problem of finding complete NEF allocations is polynomial-time solvable for two agents, one possible idea would be to analyze pairwise subproblems between agents and attempt to combine these partial solutions into a global allocation.
 \end{itemize}
 
 \subsection*{Hypothesis}
 \begin{itemize}
-    \item 
-    \item 
-    \item 
-    \item 
+    \item Constant number of agents
+    \item Agents have strict ordinal preferences over individual items
+    \item Indivisible goods
 \end{itemize}
 
 \subsection*{Key Words}
 \begin{itemize}
-    \item \textbf{}
-    \item \textbf{}
-    \item \textbf{}
-    \item \textbf{}
-    \item \textbf{}
-    \item \textbf{}
-    \item \textbf{}
-    \item \textbf{ }
-    \item \textbf{}
-    \item \textbf{}
+    \item \textbf{Fairness}
+    \item \textbf{NEF}
+    \item \textbf{Allocation}
 \end{itemize}
 
 \subsection*{Notations}
@@ -614,64 +652,84 @@ In a previous article, we have seen that some combinaison of items are inefficie
 \end{itemize}
 
 \subsection*{Methodology}
+\paragraph{Get a complete NEF allocation.}
+One possible approach is to construct the allocation progressively by considering longer prefixes of the preference lists.
+\begin{enumerate}
+    \item Start with the first choice of each agent and select allocations that satisfy the NEF constraints.
+
+    \item Extend the analysis to the second choices while keeping only allocations that preserve the NEF inequality.
+
+    \item Continue by considering increasingly longer prefixes of the preference rankings.
+\end{enumerate}
+\textbf{Difficulties:}
 \begin{itemize}
-    \item 
-    \item 
-    \begin{itemize}
-        \item 
-        \item
-    \end{itemize}
-    \item
-    \begin{itemize}
-        \item 
-    \end{itemize}
-    \item 
+    \item The number of possible allocations grows exponentially. Indeed the space of allocations is huge $n^m$ for n agents and m items.
+    \item It is difficult to determine in advance which partial allocations can be extended into complete NEF allocations.
+    \item No obvious filtering method allows us to keep only promising partial allocations without exploring a large portion of the search space.
+\end{itemize}
+This combinatorial explosion leads to the NP-completeness of the ExistsNEF problem for at least 3 agents.
+\paragraph{Proof of NP-completeness.}
+\begin{itemize}
+    \item Prove the NP-completeness for the case of three agents.
+    \item Prove the NP-completeness for a fixed number of agents superior or equal to 3.
 \end{itemize}
 
 \subsection*{Key Results}
 \begin{enumerate}
-    \item 
-    \item 
-    \item
-    \item 
+    \item A NEF1 allocation can be obtained by allocating the most valuable items among agents using a \textit{round-robin} procedure. In a round-robin procedure, agents take turns selecting items according to a fixed order.  
+At each step, the current agent chooses her most preferred remaining item.
+    \item The computational complexity of the problem ExistsNEF is a function of the number of agents involved.
 \end{enumerate}
 
 \subsection*{Limitations}
 \begin{itemize}
-    \item 
-    \item 
-    \item 
+    \item The article studies the baseline model with complete ordinal preferences. It remains unclear whether the results extend to richer models of partial preferences.
+    \item The preferences induced are partial over bundles, because ordinal information does not always allow for the comparison of all bundles.
 \end{itemize}
 
 \subsection*{Open Questions}
 \begin{itemize}
-    \item 
-    \item 
-    \item 
-    \item 
+    \item Are there restricted settings in which the problem of finding NEF allocations can be solved in polynomial time?
+
+    \item What is the probability that a randomly generated instance admits a necessarily envy-free allocation under common probabilistic models?
 \end{itemize}
 
 \subsection*{Key Ideas for My Research}
 \label{subsec:relevance4}
 \begin{itemize}
-    \item
-    \item 
-    \item  
+    \item This article demonstrates the complexity of the NEF problem and lead us to consider restriction that allows polynomial time solutions.
 \end{itemize}
 \subsection*{Summary}
 
 % Table summarizing the article along key dimensions
 \begin{center}
-\begin{tabular}{ll}
-\toprule
-\textbf{Dimension} & \textbf{Options} \\
-\midrule
-Preference model & ordinal / cardinal \\
-Level of information & complet / partiel \\
-Fairness criteria & envy-free / Pareto \\
-Robustness & possible / necessary \\
-\bottomrule
-\end{tabular}
+Ordinal preferences over items\\
+(each agent ranks individual items)
+
+        ↓
+
+Responsive set extension\\
+(rule used to extend item rankings to bundles)
+
+        ↓
+
+Complete allocation\\
+(consider an allocation $\pi$ which allocate bundle of objects to each agent)
+
+        ↓
+
+Induced preferences over bundles\\
+(use extension rule to get partial preferences over allocated bundles)
+        
+        ↓
+
+Define envy between bundles\\
+(agent i prefers bundle of j to their own)
+
+        ↓
+
+Determine Necessary Envy-Freeness\\
+(using the proposition 1 requirements. No envy over any set of items allocated to some other agent / no envy for all additive valuations consistent with the ordinal preferences)
 \end{center}
 
 
