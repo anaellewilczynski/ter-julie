@@ -738,6 +738,160 @@ Determine Necessary Envy-Freeness\\
 % ADD MORE SECTIONS FOR EACH ARTICLE
 
 
+\section{Trends in Computational Social Choice - Popular Matching}
+\label{sec:article5}
+
+\subsection*{Bibliographic Information}
+\begin{itemize}
+    \item \textbf{Authors:} Ágnes Cseh
+    \item \textbf{Year:} 2017
+    \item \textbf{Domain:} Social Choice, Popular Matching
+    \item \textbf{DOI:} --
+\end{itemize}
+
+\subsection*{Main Ideas}
+\begin{tcolorbox}[colback=blue!5!white, colframe=blue!50!black]
+
+\end{tcolorbox}
+
+\subsection*{Research Problem}
+Given a matching market
+\begin{itemize}
+    \item A set of market participant
+    \item A set of scenarios
+    \item A collection of preferences lists for each market participant 
+\end{itemize}
+\textbf{Question: Finding a matching that is optimal with respect to the collection of preferences expressed by each market participant.}
+
+\textbf{Definitions:}
+\begin{itemize}
+    \item \textbf{Maximum weight:} Maximize the total utility of the agents when agents express their preferences in a cardinal manner.
+    \item \textbf{Minimum cost matchings:} Minimize the total cost of the agents when agents express their preferences in a cardinal manner.
+    \item \textbf{Stable matching:} A matching is stable if there is no pair of market participant and scenario who prefers each other to their assigned mates. In others words, no coalitions of market participants can be made to deviate from the solution. A stable matching has no blocking pair.
+    \item \textbf{Blocking pair:} A bloking pair comprises two agents not matched to each other who are either single or prefer to be matched to one another than to their respective partners in the matching.
+    \item \textbf{Pareto-optimal matching:} A matching is Pareto-optimal if there is no other matching in which at least one agent is better off, whilst no agent is worse off. 
+    \item \textbf{Profile of the matching:} An array of numbers, where the ith element is the number of agents who are matched to their ith choice object.
+    \item \textbf{Rank maximal matching:} Matching that maximize the number of agents who are matched with their most preferred object. More agents are matched to their first choice, better it is. Can be found in polynomial time.
+    \item \textbf{Many-to-one matching (capacitated popular matching problem):} each object has a positive capacity, which is the upper bound on the number of agents who can get this object allocated to them and each agent is allowed to receive one object at most.
+
+\end{itemize}
+
+\textbf{Related Questions and Issues:}
+\begin{itemize}
+    \item How to ensure the maximum weight or minimum cost matchings when we have cardinal preferences?
+    \item How to ensure the stable marriage when we have ordinal preferences?
+    \item Find a tradeoff between the size (maximizing the number of matchs/pairs) and the optimality of the matching (respecting the everyone's preferences). For exemple, in a marriage problem, the all female will prefer one match and conversely one stable marriage will be preferred by all men to all stable marriage. So more the number of macths increases, more it is difficult to satisfy everyone's preferences. If we want that everybody is satisfied, we risk to do less matchs. The solution with no match is stable, nobody envy another person (Peux tu vérifier si c'est vrai car je ne suis pas sûre, j'avais cru voir ça dans le livre Handbook of Computational Social Choice.).
+    \item Inconvenients: The largest Pareto optimal matching and the largest rank maximal matching can be as small as half the size of a maximum matching.
+    \item For one-sided model, does there exist popular matchings and how to find a maximum size popular matching?
+    \item 
+\end{itemize}
+
+\textbf{Popular matching (Gärdenfors, 1975):} 
+Tradeoff between the number of matching and the respect of preferences. 
+No matter what alternative matching is offered on the market, the majority of the agents will opt for the popular matching.
+
+In a voting perspective, all possible matchins are the set of candidates and the agents vote for the best alternative.
+The popular matching, in this context, is a well-defined subset of candidates, i.e the set of weak Condorcet winners.
+The Condorcet compare each candidate two by two through tournaments. 
+The weak Condorcet winners is the set of the alternatives that beat or tie with every other alternative in a pairwise comparison.
+
+\subsection*{Hypothesis}
+\begin{itemize}
+    \item Assume that we are given a not necessarily complete and not necessarily bipartite graph
+    \item 
+    \item 
+\end{itemize}
+
+\subsection*{Key Words}
+\begin{itemize}
+    \item \textbf{Popular matching}
+\end{itemize}
+
+\subsection*{Notations}
+\begin{itemize}
+    \item Popular matching graph: $n$ vertices / agents and $m$ edges / pairs. Each agent expresses its preferences as a strict ordered list over her adjacent agents (cf Figure 6.2).
+    \item Matching: set of edges in the graph for which no agent is matched to more than one other agent.
+    \item Popular matching bipartite model:
+    \begin{itemize}
+        \item One-side model: One side of the graph consists of agents who have preferences and votes, while the other side is formed by objects without preferences and votes. Ex: House allocation market.
+        \item Two-side model: Two side of distinct group of agents who have preferences and votes. Each group of agent has no internal link. Ex: Stable marriage model.
+    \end{itemize}
+    \item one-sided bipartite graph $G = (A \cup B, E)$ with $A$ the agents, $B$ the objects and $E$ the edges.
+\end{itemize}
+
+\subsection*{Methodology}
+\paragraph{Matching comparison.}
+\begin{itemize}
+    \item Compare matchings $M_1$ and $M_2$: each vertex vote for the matching in which she is matched with the best partner or in which she is matched (not unmatched). A vertex can vote a blank ballot if no matching is better than the other (matched to a vertex with the same rank or unmatched in both matchings).
+    \begin{itemize}
+        \item $M_1$ is at least as popular as $M_2$: $M_1$ has at least the same number of votes than $M_2$.
+        \item $M_1$ defeats $M_2$: $M_1$ receives more votes than $M_2$ (not transitive).
+        \item $M$ is popular if it is at least as popular as any other matching, it does not get defeated by any matching in a comparison.
+    \end{itemize} 
+\end{itemize}
+\paragraph{One-sided popular matching.}
+\textbf{Lemma:} M is popular in an instance of the one sided model if and only if
+\begin{enumerate}
+    \item every first choice object is assigned in M and
+    \item each agent is matched to either their first or second choice object. 
+The second choice is the object that was not marked as a first choice by anyone and it is ranked the highest among such objects in the agent's preference list.
+\end{enumerate}
+Search for a popular matching:
+\begin{itemize}
+    \item Construct the one-sided graph, where each agent is adjacent to their first and second choice objects only.
+    \item Check for a matching that matches all agents and all first choice objects.
+    \item If some agents cannot have their first choice, we try to give them their second choice by reordering the attributions to have the lower number of agents with their last resort object.
+\end{itemize}
+
+
+\subsection*{Key Results}
+\begin{enumerate}
+    \item For two-sided model (bipartite), Gale and Shapley showed that a stable matching always exists and can be found in linear time.
+    \item Roth 1984: states that the set of matched agents is identical in all stable matchings and all stable solutions have the same cardinality.
+    \item Every stable matching in a market with strict preferences is Pareto optimal, but Pareto optimal matchings can be twice as large as stable matchings.
+    \item A maximum Pareto optimal matching can be found in polynomial time for bipartite model.
+    \item A stable matching is not guaranteed to exist and there exists a polynomial algorithm to find it for non bipartite model.
+    \item For one-sided model, the existence of a popular matching is not guaranteed (e.g figure 6.1 similar to the voting paradox of Condorcet, none of the matchings is popular). There exists an O(n+m) algorithm that output a largest cardinality popular matching or a proof for its nonexistence.
+    \item A Pareto optimal matching always exists and largest Pareto optimal matching can be found in polynomial time.
+    \item For capacitated popular matching problem there exists an linear algorithm to determine the existence of a popular matching and find a largest popular matching.
+\end{enumerate}
+
+\subsection*{Limitations}
+\begin{itemize}
+    \item 
+\end{itemize}
+
+\subsection*{Open Questions}
+\begin{itemize}
+    \item 
+\end{itemize}
+
+\subsection*{Key Ideas for My Research}
+\label{subsec:relevance5}
+\begin{itemize}
+    \item The aims of reading this article is to determine if our type of partial preferences already exists in a certain form.
+    \item This article gives us fundamental definitions of popular matching and optimality criteria.
+    \item  
+\end{itemize}
+\subsection*{Summary}
+
+% Table summarizing the article along key dimensions
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+\textbf{Dimension} & \textbf{Options} \\
+\midrule
+
+
+\bottomrule
+\end{tabular}
+\end{center}
+
+
+\newpage
+
+% ADD MORE SECTIONS FOR EACH ARTICLE
+
 
 \section{Vocabulary}
 \begin{itemize}
