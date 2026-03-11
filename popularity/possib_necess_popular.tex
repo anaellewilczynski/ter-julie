@@ -1,0 +1,126 @@
+\documentclass{article}
+
+\usepackage{a4wide}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{natbib}
+\usepackage{booktabs}
+\usepackage{tikz}
+
+\newtheorem{example}{Example}
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}{Definition}
+\newtheorem{observation}{Observation}
+\newtheorem{proposition}{Proposition}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{corollary}{Corollary}
+\newtheorem{lemma}{Lemma}
+
+%Shortcuts
+\newcommand{\match}{\mu}
+\newcommand{\linearorders}{\mathcal{L}}
+
+%TikZ commands
+\newcommand*\encircled[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=0.25pt,minimum size=1em] (char) {\vphantom{Ag}#1};}}
+\newcommand*\framed[1]{\tikz[baseline=(char.base)]{
+            \node[draw,inner sep=0.25pt,minimum size=1em] (char) {\vphantom{Ag}#1};}}
+            
+
+\title{Possible and Necessary Popularity in House Allocation}
+
+\begin{document}
+
+\maketitle
+
+\section{Preliminaries}
+
+We are given a set of $n$ agents $N = \{1,\dots,n\}$, and a set of $n$ items $O=\{o_1,\dots,o_n\}$.
+We assume that each agent $i \in N$ has strict ordinal preferences on the items, represented by a linear order $\succ_i$ over $O$.
+The preference profile $\succ$ is the collection of all agents' preferences, i.e., $\succ=(\succ_1,\dots,\succ_n)$.
+The set of all possible linear orders over $O$ is denoted by $\linearorders(O)$.
+A matching $\match:N\to O$ is a bijection assigning to every agent $i\in N$ an item in $O$ denoted by $\match(i)$.
+
+A matching $\match$ is \emph{Pareto-optimal} if there is no other matching that is at least as good for all agents and strictly better for at least one agent.
+We are interested by a refinement of Pareto-optimality called \emph{popularity}: a matching is popular if there is no other matching that is more popular, i.e., that is preferred by more agents.
+
+\begin{definition}[Popularity]
+A matching $\match$ is popular if $|\{i\in N: \match(i)\succ_i \match'(i)\}|\geq |\{i\in N: \match'(i)\succ_i \match(i)\}|$, for every matching $\match'$.
+\end{definition}
+
+A popular matching is trivially Pareto-optimal but is not guaranteed to exist.
+The following characterization of popularity due to \citet{abraham2007popular} allows to decide in polynomial time whether a popular matching exists.
+
+\begin{lemma}[\citet{abraham2007popular}]\label{lem:charact-pop}
+A matching is popular iff every agent is assigned either her most preferred item or her most preferred item among those that are not ranked first by any agent.
+\end{lemma}
+
+We suppose that the agents may communicate partial preferences, i.e., each agent $i\in N$ expresses a strict partial order $P_i$ over $O$.
+The partial preference profile is denoted by $P=(P_1,\dots,P_n)$.
+An instance of house allocation with incomplete preferences is thus given by $\langle N,P \rangle$.
+
+To reconstruct the complete preferences, we will consider possible completions of the partial preference profile.
+A linear order $\succ_i$ is a linear extension of $P_i$ if it is compatible with $P_i$, i.e., for all items $o,o'\in O$ if $o P_i o'$ then $o \succ_i o'$. 
+A preference profile $\succ$ is a possible completion of a partial preference profile $P$ if $\succ_i$ is a linear extension of $P_i$, for every $i\in N$.
+%The set of all possible completions of a partial preference $P_i$ is denoted by $Lin(P_i)$.
+
+The definition of popularity can then be adapted to partial preferences by considering possible or necessary outcomes with respect to the possible preference completions.
+
+\begin{definition}[Possible popularity]
+A matching is possibly popular if it is popular in at least one completion of the partial preference profile.
+\end{definition}
+
+\begin{definition}[Necessary popularity]
+A matching is necessarily popular if it is popular in all completions of the partial preference profile. 
+\end{definition}
+
+Let us illustrate these two notions in the following example.
+
+\begin{example}
+Let us consider an instance of house allocation with incomplete preferences with four agents who have the following partial preferences:
+\begin{center}
+\begin{tabular}{ll}
+$1:$ & $a\succ b$ \\
+$2:$ & $b\succ c$ \\
+$3:$ & $a\succ c$ \\
+$4:$ & $a\succ d\succ b$
+\end{tabular}
+\end{center}
+There exists the following completion of the partial preference profile where there are exactly two popular matchings: the framed and the encircled matchings.
+\begin{center}
+\begin{tabular}{*{8}{c}}
+$1:$ & $\framed{\encircled{a}}$ & $\succ$ & $b$ & $\succ$ & $c$ & $\succ$ & $d$ \\
+$2:$ & $\framed{b}$ & $\succ$ & $a$ & $\succ$ & $\encircled{c}$ & $\succ$ & $d$ \\
+$3:$ & $\encircled{b}$ & $\succ$ & $a$ & $\succ$ & $\framed{c}$ & $\succ$ & $d$ \\
+$4:$ & $a$ & $\succ$ & $\framed{\encircled{d}}$ & $\succ$ & $c$ & $\succ$ & $b$
+\end{tabular}
+\end{center}
+It follows that these two matchings are possibly popular in the initial partial preference profile. 
+However, none of them is necessarily popular as they would not be popular in the completion where the partial preferences of agent 1 would be extended in such a way: $d \succ_1 a \succ_1 b$.  
+Since these matchings are the only popular matchings in the previously presented preference completion, in general, there are no necessarily popular matchings in the initial partial preference profile.
+\end{example}
+
+We can then investigate the following computational problems:
+\smallbreak
+\begin{tabular}{ll}
+\toprule
+\multicolumn{2}{c}{\textsc{ExistPossibPop}/\textsc{ExistNecessPop}} \\
+\midrule
+Instance: & House allocation instance with incomplete preferences $(N,P)$ \\
+Question: & Does there exist a possibly/necessarily popular matching? \\
+\bottomrule
+\end{tabular}
+
+\smallbreak
+\begin{tabular}{ll}
+\toprule
+\multicolumn{2}{c}{\textsc{VerifPossibPop}/\textsc{VerifNecessPop}} \\
+\midrule
+Instance: & House allocation instance with incomplete preferences $(N,P)$, matching $\match$ \\
+Question: & Is $\match$ possibly/necessarily popular? \\
+\bottomrule
+\end{tabular}
+
+\bibliographystyle{plainnat}
+\bibliography{biblio}
+
+\end{document}
