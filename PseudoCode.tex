@@ -1,0 +1,147 @@
+\documentclass{article}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{tcolorbox}
+\usepackage{booktabs}
+\usepackage{a4wide}
+
+\algrenewcommand\algorithmiccomment[1]{\quad// #1}
+
+%TikZ commands
+\newcommand*\encircled[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=0.25pt,minimum size=1em] (char) {\vphantom{Ag}#1};}}
+\newcommand*\framed[1]{\tikz[baseline=(char.base)]{
+            \node[draw,inner sep=0.25pt,minimum size=1em] (char) {\vphantom{Ag}#1};}}
+
+\newtheorem{example}{Example}
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}{Definition}
+\newtheorem{observation}{Observation}
+\newtheorem{proposition}{Proposition}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{corollary}{Corollary}
+\newtheorem{lemma}{Lemma}
+
+\title{Possible and Necessary Popularity in House Allocation PseudoCode}
+
+\begin{document}
+
+\maketitle
+
+\section{Hypothesis}
+\begin{itemize}
+    \item Agents give their partial strict linear order. They indicate positions of each object in their ranking.
+    \item There are as many objects as agents.
+    \item We consider only strict linear order.
+\end{itemize}
+
+\section{Properties}
+
+\begin{proposition}[Verify Possibly popular matching]
+If $\exists i,j \in N$ such that $\sigma(j) P_i \sigma(i)$ and $\exists o \in O$ such that $o \succ_j \sigma(j) $ then return False (the matching is not popular).
+\end{proposition}
+\begin{proposition}[Find Possibly popular completion]
+If $\exists i,j \in N$ such that $\sigma(j) P_i \sigma(i)$ for $o \in O$ such that $(\sigma(j),o) \notin P$ add $(\sigma(j),o) in \succ_j$
+\end{proposition}
+
+
+\textbf{Necessarily popular matching}
+
+\begin{proposition}[Find Necessarily popular matching]
+If $\exists i,j \in N$ such that $\sigma(j) P_i \sigma(i)$ and $o \in O$
+\begin{itemize}
+    \item $o P_j \sigma(j)$ or
+    \item $(\sigma(j),o) \notin P_j$
+\end{itemize}
+Return False (it is not a necessarily popular matching).
+\end{proposition}
+\begin{proposition}[Find Necessarily popular completion]
+If $\exists i,j \in N$ such that \\ $(\sigma(i), \sigma(j)), (\sigma(j), \sigma(i)) \notin P_i$ and $o \in O$ such that
+\begin{itemize}
+    \item $o P_j \sigma(j)$
+    \item $(\sigma(j),o) \notin P_j$
+\end{itemize}
+Return False (it is not a necessarily popular matching).
+\end{proposition}
+
+\begin{proposition}
+If at least half of agents have the same fpost, it is not possible to find a popular matching.
+\end{proposition}
+
+
+\section{Algorithms}
+
+\begin{algorithm}[H]
+\caption{IsPreferredTo}
+\begin{algorithmic}[1]
+    \State \textbf{Input:} $o \in O$, $o' \in O$, $P_k \in P$
+    \State \textbf{Output:} boolean indicating either $o$ is preferred to $o'$ by agent k
+    \State
+    \For{condition}
+        \State operation
+    \EndFor
+    \State
+    \Return result
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[H]
+\caption{VerifPossiblePopularMatching}
+\begin{algorithmic}[1]
+    \State \textbf{Input:} $O$ the set of n objects, $N$ the set of n agents, $P = (P_1, ..., P_n)$ the partial profile such that $P_i = [?, \sigma(i), o, ...]$ is the list of partial preferrence of agent i (? indicates unknown preference and $\sigma(i)$ is the assigned object to i in the matching), $\mu = \{1\colon \sigma(1), ..., n\colon \sigma(n)\}$ is the matching. 
+    \State \textbf{Output:} boolean indicating either the matching $\mu$ is possibly popular, $P$ a completion of the partial profile making $\mu$ possibly popular.
+    \State
+    \For{each agent $i \in N$}
+        \For{each preference $p \in P_i$}
+            \If{$p$ is unknown (equal to ?)}
+                \State \Comment{Is there a completion such as p is the fpost matched to another agent in $\mu$?}
+                \State Find a matched fpost (should not be a fpost for more than half agents) and assigned it to p
+            \ElsIf{$p$ is $\sigma(i)$}
+                \State Complete the preference list $P_i$ with the remaining objects.
+                \State Break
+            \Else
+                \State \Comment{$p$ is an object with a better rank than $\sigma(i)$}
+                \If{$p$ is a fpost matched to another agent}
+                    \State Continue
+                \Else
+                    \State \Comment{$p$ is not a matched fpost, the matching $\mu$ cannot be popular}
+                    \State \Return False, $P$
+                \EndIf
+            \EndIf
+        \EndFor
+    \EndFor
+    \State
+    \Return result
+\end{algorithmic}
+\end{algorithm}
+
+
+\section{Examples}
+
+Let H an instance of the House Allocation problem such as:
+\begin{itemize}
+    \item $N =  \{Alice, Bob, Amelie \}$ the set of agents
+    \item $O = \{ a, b, c \} $ the set of objects (houses)
+    \item $P = \{P_1, P_2, P_3\}$ the partial profile for which $P_i$ is the strict partial preference order of the agent $i$.
+    \item $\mu = \{ (Alice, b), (Bob, c), (Amelie, a)\}$ the matching. Some object specified in the matching are not ranked in some preference lists.
+\end{itemize} 
+\begin{center}
+\begin{tabular}{llllll}
+\toprule
+\textbf{Agents} & \textbf{$P_i$} & \multicolumn{3}{c}{\textbf{Completions}} \\
+\midrule
+Alice & ? a ? & $\framed{b}$ $\encircled{a}$ c & $\framed{b}$ a c & c a $\framed{b}$ \\
+Bob & b ? ? & $\encircled{b}$ $\framed{c}$ a &  b $\framed{c}$ a & b $\framed{c}$ a \\
+Amelie & ? a ? & $\encircled{c}$ $\framed{a}$ b & b $\framed{a}$ a & b $\framed{a}$ c \\
+ & & not popular & no solution & not popular \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+
+
+
+
+
+\end{document}
