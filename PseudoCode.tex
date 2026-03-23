@@ -6,6 +6,11 @@
 \usepackage{booktabs}
 \usepackage{a4wide}
 
+\usepackage{tikz}
+\usetikzlibrary{trees}
+\usepackage{amssymb}
+\usepackage{pifont}
+
 \algrenewcommand\algorithmiccomment[1]{\quad// #1}
 
 %TikZ commands
@@ -96,7 +101,11 @@ If at least half of agents have the same fpost, it is not possible to find a pop
         \For{each preference $p \in P_i$}
             \If{$p$ is unknown (equal to ?)}
                 \State \Comment{Is there a completion such as p is the fpost matched to another agent in $\mu$?}
-                \State Find a matched fpost (should not be a fpost for more than half agents) and assigned it to p
+                \If{$\sigma(i)$ not in $P_i$}
+                    \State Assign $\sigma(i)$ to $p$
+                \Else
+                    \State Find a matched fpost (should not be a fpost for more than half agents) and assigned it to p
+                \EndIf
             \ElsIf{$p$ is $\sigma(i)$}
                 \State Complete the preference list $P_i$ with the remaining objects.
                 \State Break
@@ -116,9 +125,49 @@ If at least half of agents have the same fpost, it is not possible to find a pop
 \end{algorithmic}
 \end{algorithm}
 
+\begin{algorithm}[H]
+\caption{VerifyNecessarilyPopularMatching}
+\begin{algorithmic}[1]
+    \State \textbf{Input:} $O$, $N$, $P=(P_1, ..., P_n)$, $\mu = \{(1, \sigma(1)), ..., (n, \sigma(n))\}$
+    \State \textbf{Output:} boolean indicating either the matching is necessarily popular or not.
+    \State $cpt_fpost := 0$
+    \For{each $i \in N$}
+        \State $Isfpost := True$
+        \State \Comment{A matching is popular if each agent obtained either its fpost or spost. }
+        \State \Comment{A fpost and/or a spost can not be specified by an agent at the beginning. So we check if all the possible complétion respect this condition.}
+        \While{There exist a completion of the agent's i preference list}
+            \State $O_i :=$ the set of non ranked item by agent i. 
+            \For{Each unknown $p \in P_i$}
+                \State Choose an $o$ in $O_i$ for each unknown $p$
+                \State $O_i \leftarrow O_i \ \{o\}$
+            \EndFor
+            \State \Comment{At the end of this for loop, we get a completion of the agent's i preference list}
+            \State \Comment{Checking this completion respect the necessarily popular conditions}
+            \If{not ($\sigma(i) \in \{f(i), s(i)\}$)}
+                \State \Return False;
+            \ElsIf{$\exists x \in P_i$ such that $x \succ_i \sigma(i)$ and $x$ not a fpost}
+                \State \Return False;
+            \EndIf
+            \If{$\sigma(i) is not an fpost in this completion$}
+                \State $Isfpost \leftarrow False$
+            \EndIf
+        \EndWhile
+        \If{$Isfpost$}
+            \State $cpt_fpost \leftarrow cpt_fpost + 1$
+        \EndIf
+        \State \Comment{If at least half of fpost are assigned, the matching $\mu$ is necessarily popular }
+        \If{$cpt_fpost \geq \lceil n/2 \rceil$ }
+            \State \Return False;
+        \EndIf
+    \EndFor
+    \State \Return True;
+\end{algorithmic}
+\end{algorithm}
+
 
 \section{Examples}
 
+\textbf{Instance for possibly popular matching}
 Let H an instance of the House Allocation problem such as:
 \begin{itemize}
     \item $N =  \{Alice, Bob, Amelie \}$ the set of agents
@@ -139,9 +188,94 @@ Amelie & ? a ? & $\encircled{c}$ $\framed{a}$ b & b $\framed{a}$ a & b $\framed{
 \end{tabular}
 \end{center}
 
+\textbf{Instance for necessarily popular matching - Non necessarily popular matching}
+Let H an instance of the House Allocation problem such as:
+\begin{itemize}
+    \item $N =  \{Alice, Bob, Amelie \}$ the set of agents
+    \item $O = \{ a, b, c \} $ the set of objects (houses)
+    \item $P = \{P_1, P_2, P_3\}$ the partial profile for which $P_i$ is the strict partial preference order of the agent $i$.
+    \item $\mu = \{ (Alice, a), (Bob, b), (Amelie, c)\}$ the matching. Some object specified in the matching are not ranked in some preference lists.
+\end{itemize} 
+\begin{center}
+\begin{tabular}{llllll}
+\toprule
+\textbf{Agents} & \textbf{$P_i$} & \multicolumn{3}{c}{\textbf{Completions}} \\
+\midrule
+Alice & ? a b & $\framed{b}$ $\encircled{a}$ c & $\framed{b}$ a c & c a $\framed{b}$ \\
+Bob & ? ? a & $\encircled{b}$ $\framed{c}$ a &  b $\framed{c}$ a & b $\framed{c}$ a \\
+Amelie & c ? ? & $\encircled{c}$ $\framed{a}$ b & b $\framed{a}$ a & b $\framed{a}$ c \\
+ & & not popular & no solution & not popular \\
+\bottomrule
+\end{tabular}
+\end{center}
 
 
+\begin{tikzpicture}[
+  level distance=3.5cm,
+  level 1/.style={sibling distance=9cm},
+  level 2/.style={sibling distance=6cm},
+  level 3/.style={sibling distance=5cm},
+  every node/.style={
+    draw,
+    rounded corners,
+    align=left,
+    text width=5cm,
+    inner sep=6pt
+  }
+]
 
+\node {
+\textbf{Alice} \\[2pt]
+$p_1 = c$ \\[4pt]
+$\sigma(\text{Alice}) \in \{f(\text{Alice}), s(\text{Alice})\}$ \hfill \ding{51} \\[2pt]
+$\forall x \succ_{\text{Alice}} \sigma(\text{Alice})$ \\ 
+is fpost \hfill \ding{51}
+}
+child {
+    node {
+    \textbf{Bob} \\[2pt]
+    $p_1 = a$ \\
+    $p_2 = b$ \\[4pt]
+    $\sigma(\text{Bob}) \in \{f(\text{Bob}), s(\text{Bob})\}$ \hfill \ding{51} \\[2pt]
+    $\forall x \succ_{\text{Bob}} \sigma(\text{Bob})$ \\ 
+    is fpost \hfill \ding{55}
+    }
+}
+child {
+    node {
+    \textbf{Bob} \\[2pt]
+    $p_1 = b$ \\
+    $p_2 = a$ \\[4pt]
+    $\sigma(\text{Bob}) \in \{f(\text{Bob}), s(\text{Bob})\}$ \hfill \ding{51} \\[2pt]
+    $\forall x \succ_{\text{Bob}} \sigma(\text{Bob})$ \\ 
+    is fpost \hfill \ding{51}
+    }
+    child {
+        node {
+        \textbf{Amelie} \\[2pt]
+        $p_1 = c$
+        }
+        child {
+            node {
+            $p_2 = a$ \\
+            $p_3 = b$ \\[4pt]
+            $\sigma(\text{Amelie}) \in \{f(\text{Amelie}), s(\text{Amelie})\}$ \hfill \ding{51} \\[2pt]
+            $\forall x \succ_{\text{Amelie}} \sigma(\text{Amelie})$ \\ 
+            is fpost \hfill \ding{51}
+            }
+        }
+        child {
+            node {
+            $p_2 = b$ \\
+            $p_3 = a$ \\[4pt]
+            $\sigma(\text{Amelie}) \in \{f(\text{Amelie}), s(\text{Amelie})\}$ \hfill \ding{51} \\[2pt]
+            $\forall x \succ_{\text{Amelie}} \sigma(\text{Amelie})$ \\ 
+            is fpost \hfill \ding{51}
+            }
+        }
+    }
+};
 
+\end{tikzpicture}
 
 \end{document}
