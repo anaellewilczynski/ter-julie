@@ -299,4 +299,54 @@ child {
 
 \end{tikzpicture}
 
+
+\section{Proof}
+
+\subsection{Proof Verif Possible Popular Matching}
+
+Let's try to prove this lemma by contradiction.
+Supposing the property \textbf{Prop:} $\exists i,j \in N$ such that $\sigma(j) P_i \sigma(i)$ and $\exists o \in O$ such that $o \succ_j \sigma(j) $ is true. 
+From this property, we assume the matching $\mu$ not possibly popular.
+
+A matching $\mu$ is possibly popular if it is popular in at least one completion of the partial preference profile.
+\paragraph{Initialization}
+For 2 agents and 2 objects:
+\[
+i: \sigma(j) P_i \framed{$\sigma(i)$}
+\]
+\[
+j: \sigma(i) P_j \framed{$\sigma(j)$}
+\]
+$\exists \mu' = \{(i, \sigma(j)),(j, \sigma(i))\}$ such that $|\{i\in N: \sigma(i)\succ_i \sigma'(i)\}| < |\{i\in N: \sigma'(i)\succ_i \sigma(i)\}|$ (0 $<$ 2).
+Hence $\mu$ is not a popular matching whatever the completion (there are only two possible completions for this setting) for 2 agents and 2 objects.
+\paragraph{Inheritance}
+We suppose the property Prop true for n agents and n objects and we want to determine whether the property is still true for n+1 agents and n+1 objects.
+If $\mu$ is not popular at rank n, this means there is no completion such that $|\{i\in N: \sigma(i)\succ_i \sigma'(i)\}| \geq |\{i\in N: \sigma'(i)\succ_i \sigma(i)\}|$.
+Let's add an agent and an object:
+By contraposition, we have
+\[
+A => B
+\]
+\[
+not B => not A
+\]
+where\\
+B: $\forall$ completions over $n+1$, $\mu$ is not popular.\\
+A: $\forall$ completions over $n$, $\mu$ is not popular.\\
+not B: $\exists$ a completion over $n+1$, such that $\mu$ is popular.\\
+not A: $\exists$ a completion over $n$, such that $\mu$ is popular.\\
+
+In other words, if we suppose there exists a completion over $n+1$ such that $\mu$ is popular, then this implies that there exists a completion over $n$ such that $\mu$ is popular. 
+However, we said that $\mu$ is not popular over $n$ so all completions over $n+1$ make $\mu$ not popular.\\
+Nevertheless, we must show that if $\exists$ a completion over $n+1$ such that $\mu$ is popular then its restriction over $n$ is still popular.
+
+Over $n+1$: $|\{i\in N: \sigma(i)\succ_i \sigma'(i)\}| \geq |\{i\in N: \sigma'(i)\succ_i \sigma(i)\}| \forall \mu'$
+We restreint by removing 1 agent and 1 object (called agent k and object k):
+\begin{enumerate}
+    \item agent k $\in \{i\in N: \sigma(i)\succ_i \sigma'(i), \forall \mu'\}$ and object k is not $\sigma(k)$
+    \item agent k $\in \{i\in N: \sigma(i)\succ_i \sigma'(i), \forall \mu'\}$ and object k is $\sigma(k)$
+    \item agent k $\in \{i\in N: \sigma'(i)\succ_i \sigma(i), \forall \mu'\}$ and object k is not $\sigma(k)$
+    \item agent k $\in \{i\in N: \sigma'(i)\succ_i \sigma(i), \forall \mu'\}$ and object k is $\sigma(k)$
+\end{enumerate}
+
 \end{document}
