@@ -94,6 +94,27 @@ If at least half of agents have the same fpost, it is not possible to find a pop
 \begin{algorithm}[H]
 \caption{VerifPossiblePopularMatching}
 \begin{algorithmic}[1]
+    \State \textbf{Input:} $O$ the set of n objects, $N$ the set of n agents, $P = (P_1, ..., P_n)$ the partial profile such that $P_i = [(o_l, o_k), ...]$ is the list of pairwise partial preferrence of agent i, $\mu = \{1\colon \sigma(1), ..., n\colon \sigma(n)\}$ is the matching ($\sigma(i)$ is the assigned object to i in the matching). 
+    \State \textbf{Output:} boolean indicating either the matching $\mu$ is possibly popular
+    \For{each agent $i \in N$}
+        \For{each preference $(o_{sup}, o_{inf}) \in P_i$}
+            \State NotFpost $\leftarrow o_{inf}$ is $\sigma(i)$
+            \State NotDominatedByFpost  $\leftarrow False $
+            \For{each preference $(o, o') \in P_j$ }
+                \State NotDominatedByFpost $\leftarrow o_{sup}$ is $o'$
+            \EndFor
+            \If{NotFpost and NotDominatedByFpost}
+                \State \Return False
+            \EndIf
+        \EndFor
+    \EndFor
+    \State \Return True
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[H]
+\caption{VerifPossiblePopularMatching}
+\begin{algorithmic}[1]
     \State \textbf{Input:} $O$ the set of n objects, $N$ the set of n agents, $P = (P_1, ..., P_n)$ the partial profile such that $P_i = [?, \sigma(i), o, ...]$ is the list of partial preferrence of agent i (? indicates unknown preference and $\sigma(i)$ is the assigned object to i in the matching), $\mu = \{1\colon \sigma(1), ..., n\colon \sigma(n)\}$ is the matching. 
     \State \textbf{Output:} boolean indicating either the matching $\mu$ is possibly popular, $P$ a completion of the partial profile making $\mu$ possibly popular.
     \State
