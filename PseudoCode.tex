@@ -36,7 +36,7 @@
 
 \section{Hypothesis}
 \begin{itemize}
-    \item Agents give their partial strict linear order. They indicate positions of each object in their ranking.
+    \item Agents give their partial strict linear order (pairwise comparison).
     \item There are as many objects as agents.
     \item We consider only strict linear order.
 \end{itemize}
@@ -70,27 +70,15 @@ If $\exists i,j \in N$ such that \\ $(\sigma(i), \sigma(j)), (\sigma(j), \sigma(
 Return False (it is not a necessarily popular matching).
 \end{proposition}
 
-\begin{proposition}
-If at least half of agents have the same fpost, it is not possible to find a popular matching.
-\end{proposition}
+% FAUX
+% \begin{proposition}
+% If at least half of agents have the same fpost, it is not possible to find a popular matching.
+% \end{proposition}
 
 
 \section{Algorithms}
 
-\begin{algorithm}[H]
-\caption{IsPreferredTo}
-\begin{algorithmic}[1]
-    \State \textbf{Input:} $o \in O$, $o' \in O$, $P_k \in P$
-    \State \textbf{Output:} boolean indicating either $o$ is preferred to $o'$ by agent k
-    \State
-    \For{condition}
-        \State operation
-    \EndFor
-    \State
-    \Return result
-\end{algorithmic}
-\end{algorithm}
-
+\subsection{Implementation with pairwise comparison}
 \begin{algorithm}[H]
 \caption{VerifPossiblePopularMatching}
 \begin{algorithmic}[1]
@@ -111,6 +99,8 @@ If at least half of agents have the same fpost, it is not possible to find a pop
     \State \Return True
 \end{algorithmic}
 \end{algorithm}
+
+\subsection{First implementation with positional ranking}
 
 \begin{algorithm}[H]
 \caption{VerifPossiblePopularMatching}
@@ -296,117 +286,66 @@ child {
         }
     }
 };
-
 \end{tikzpicture}
+
+\pagebreak
 
 
 \section{Proof}
 
 \subsection{Proof Verif Possible Popular Matching}
 
-
-\subsection{Verification of Possibly Popular Matching}
-
-\begin{proposition}
-Let $N$ be a set of $n$ agents and $O$ a set of $n$ objects. Preferences are given as partial orders (pairwise comparisons), and we consider their completions into strict total orders. Assume a perfect matching setting (each agent is matched to exactly one object and vice versa).
-
-If there exist $i,j \in N$ such that
-\[
-\sigma(j) \succ_i \sigma(i)
-\]
-and there exists $o \in O$ such that
-\[
-o \succ_j \sigma(j),
-\]
-then $\mu$ is not possibly popular.
-\end{proposition}
+\paragraph{Hypotheses}
+\begin{itemize}
+    \item $N$ is a set of $n$ agents and $O$ a set of $n$ objects.
+    \item We assume a \textbf{perfect matching}: $|N| = |O|$ and all agents/objects are matched.
+    \item Preferences are given as \textbf{partial orders} (pairwise comparisons).
+    \item We consider \textbf{completions of the partial preference profile}.
+    \item $\mu$ is a matching.
+\end{itemize}
 
 \paragraph{Definitions}
+
 \begin{itemize}
-    \item A \textbf{completion} is a strict total order extending the partial preferences.
+    \item A \textbf{completion} is a strict complete order extending the partial preferences.
     \item A matching $\mu$ is \textbf{popular} if for every matching $\mu'$:
     \[
     |\{i \in N : \mu(i) \succ_i \mu'(i)\}| \ge |\{i \in N : \mu'(i) \succ_i \mu(i)\}|.
     \]
-    \item $\mu$ is \textbf{possibly popular} if it is popular under at least one completion.
-    \item We assume a \textbf{perfect matching}: $|N| = |O|$ and all agents/objects are matched.
+    \item $\mu$ is \textbf{possibly popular} if it is popular under at least one completion of the partial preference profile.
 \end{itemize}
 
-\paragraph{Proof}
 
-We prove the contrapositive: assume that there exist $i,j \in N$ and $o \in O$ such that
+\paragraph{Proof of $\Rightarrow$}
+
+Suppose that there exist $i,j \in N$ such that
 \[
-\sigma(j) \succ_i \sigma(i)
+\sigma(j) P_i \sigma(i)
 \quad \text{and} \quad
-o \succ_j \sigma(j).
+\exists o \in O \text{ such that } o \succ_j \sigma(j).
 \]
 
-We show that $\mu$ cannot be popular under any completion.
+We prove that $\mu$ is not possibly popular.
+
+Let $\succ$ be any completion of the partial preference profile $P$. We show that $\mu$ is not popular under $\succ$ by constructing a matching $\mu'$ that defeats $\mu$.
 
 \medskip
 
-Let $\mu$ be any completion of the preferences. We construct a competing matching $\mu'$.
-
-\medskip
-
-\textbf{Case 1:} $o$ is unmatched in $\mu$.
-
-Define $\mu'$ by:
-\[
-\mu'(i) = \sigma(j), \quad \mu'(j) = o,
-\]
-and keep all other assignments unchanged except for maintaining a valid matching.
-
-\medskip
-
-\textbf{Case 2:} $o = \sigma(k)$ for some agent $k$.
-
-We define a local exchange (cycle of length 3):
-\[
-i \to \sigma(j), \quad
-j \to o, \quad
-k \to \sigma(i).
-\]
-
-Formally:
-\[
-\mu'(i) = \sigma(j), \quad
-\mu'(j) = o, \quad
-\mu'(k) = \sigma(i),
-\]
-and for all other agents $\ell \notin \{i,j,k\}$:
-\[
-\mu'(\ell) = \mu(\ell).
-\]
-
-\medskip
-
-\textbf{Validity:}  
-This defines a valid matching since it is a permutation of objects among $\{i,j,k\}$ and leaves all others unchanged.
-
-\medskip
-
-\textbf{Locality:}  
-The modification from $\mu$ to $\mu'$ only affects agents $i,j,k$.
-
-\medskip
-
-\textbf{Comparison of preferences:}
+\textbf{Construction of $\mu'$}
 
 \begin{itemize}
-    \item Agent $i$ prefers $\mu'$:
+    \item If $o$ is unmatched in $\mu$, define:
     \[
-    \mu'(i) = \sigma(j) \succ_i \sigma(i) = \mu(i).
+    \mu'(i) = \sigma(j), \quad \mu'(j) = o.
     \]
     
-    \item Agent $j$ prefers $\mu'$:
+    \item Otherwise, there exists $k \in N$ such that $o = \sigma(k)$. Define a local exchange:
     \[
-    \mu'(j) = o \succ_j \sigma(j) = \mu(j).
+    \mu'(i) = \sigma(j), \quad
+    \mu'(j) = o, \quad
+    \mu'(k) = \sigma(i),
     \]
-    
-    \item Agent $k$ may prefer $\mu$ or $\mu'$ (no guarantee).
-    
-    \item All other agents are indifferent:
+    and for all $\ell \notin \{i,j,k\}$:
     \[
     \mu'(\ell) = \mu(\ell).
     \]
@@ -414,101 +353,204 @@ The modification from $\mu$ to $\mu'$ only affects agents $i,j,k$.
 
 \medskip
 
-\textbf{Vote count:}
+\textbf{Validity}
 
-\[
-|\{i : \mu'(i) \succ_i \mu(i)\}| \ge 2
-\]
-\[
-|\{i : \mu(i) \succ_i \mu'(i)\}| \le 1
-\]
+The matching $\mu'$ is valid since it corresponds to a permutation of objects among at most three agents and leaves all others unchanged.
 
 \medskip
 
-Thus:
-\[
-|\{i : \mu'(i) \succ_i \mu(i)\}| > |\{i : \mu(i) \succ_i \mu'(i)\}|
-\]
+\textbf{Comparison of $\mu$ and $\mu'$}
 
-So $\mu'$ is more popular than $\mu$.
+\begin{itemize}
+    \item Agent $i$ prefers $\mu'$:
+    \[
+    \sigma(j) \succ_i \sigma(i).
+    \]
+    
+    \item Agent $j$ prefers $\mu'$:
+    \[
+    o \succ_j \sigma(j).
+    \]
+    
+    \item At most one agent (namely $k$ if it exists) may prefer $\mu$.
+    
+    \item All other agents are indifferent.
+\end{itemize}
 
 \medskip
 
-\textbf{Conclusion:}
+\textbf{Vote count}
 
-For any completion, we can construct a matching $\mu'$ that defeats $\mu$. Hence $\mu$ is not popular under any completion.
+\[
+|\{i \in N : \mu'(i) \succ_i \mu(i)\}| \ge 2
+\quad \text{and} \quad
+|\{i \in N : \mu(i) \succ_i \mu'(i)\}| \le 1.
+\]
 
-Therefore, $\mu$ is not possibly popular.
+Thus, $\mu'$ is more popular than $\mu$, contradicting the popularity of $\mu$.
+
+\medskip
+
+Since this holds for any completion, $\mu$ is not possibly popular.
+
 \qed
 
 
-=>
+\paragraph{Proof of $\Leftarrow$}
 
-Suppose for a contradiction that the matching $\mu$ is popular for a given completion and $\exists i,j \in N$ such that $\sigma(j) P_i \sigma(i)$ and $\exists o \in O$ such that $o \succ_j \sigma(j) $.
-Given the lemma 2.4 describe in the paper "Popular Matching" of Abraham et al, a matching is popular if and only if each agent is matched either with its fpost or its spost and every fpost is matched.
+Suppose that $\mu$ is not possibly popular. Then for every completion of the partial preference profile, $\mu$ is not popular.
 
+We use the following characterization from Abraham et al.:
+
+\medskip
+
+\textbf{Lemma (Abraham et al.)}  
+A matching $\mu$ is popular if and only if:
 \begin{itemize}
-    \item The agent i is not matched to its fpost because $\sigma(j) \succ_i \sigma(i)$. So agent i will be matched to its spost and agent j will be matched to the fpost of i.
-    \item The agent j is not matched to its fpost because $\exists o \in O$ such that $o \succ_j \sigma(j) $. So agent j will be matched to its spost and $o$ is its fpost.
-    \item Let $\mu'$ be another matching such that $\sigma'(i) = fpost(i) = \sigma(j)$ and $\sigma'(j) = fpost(j) = o$. So agents i and j will prefer $\mu'$ to $\mu$ and by consequence, $\mu'$ is more popular than $\mu$. It is a contradiction because we have assumed that $\mu$ is popular.
+    \item every agent is matched to either its $fpost$ or its $spost$,
+    \item and every $fpost$ is matched.
 \end{itemize}
-To conclude, this proves the lemma.
 
-<=
-Suppose that the matching $\mu$ is not popular.
-So $\exists i \in N$ such that $\sigma(i) \notin \{fpost(i), spost(i)\}$. 
-By consequence, $\exists j,k \in N$ such that $\sigma(j) = fpost(i)$ and $\sigma(k) = spost(i)$.
+\medskip
+
+By contraposition of the lemma (Abraham et al), since $\mu$ is not popular for any completion, for every completion there exists at least one agent $i$ such that:
+\[
+\mu(i) \notin \{fpost(i), spost(i)\}.
+\]
+
+In particular, this implies:
+\[
+fpost(i) \succ_i \mu(i).
+\]
+
+Let $j \in N$ be such that:
+\[
+\mu(j) = fpost(i).
+\]
+
+Thus:
+\[
+\sigma(j) \succ_i \sigma(i).
+\]
+
+Let $k \in N$ be such that:
+\[
+\mu(k) = spost(i).
+\]
+
+We distinguish the following cases:
+
 \begin{enumerate}
-    \item Either $\sigma(j) = fpost(j)$ and $\sigma(k) = fpost(k)$. It is a contradiction because $\mu$ is not popular ($|\{i\in N: \sigma(i)\succ_i \sigma'(i)\}| < |\{i\in N: \sigma'(i)\succ_i \sigma(i)\}|$).
-    \item Either one of them, e.g k gets its fpost and j is matched with its spost. So $\exists o \in O$ such that $o \succ_j \sigma(j)$ and $\sigma(j) \succ_i \sigma(i)$. The property is verified.
-    \item Either one of them, e.g k gets its fpost and $\sigma(j) \notin \{fpost(j), spost(j)\}$. So $\exists o \in O$ such that $o \succ_j \sigma(j)$ and $\sigma(j) \succ_i \sigma(i)$. The property is verified.
+    \item If $\mu(j) \notin \{fpost(j), spost(j)\}$, then by definition of $fpost(j)$ there exists an object $o \in O$ such that:
+    \[
+    o \succ_j \mu(j),
+    \]
+    and the property holds.
+
+    \item If $\mu(j) = spost(j)$, then by definition of $fpost(j)$ we have:
+    \[
+    fpost(j) \succ_j \mu(j),
+    \]
+    so there exists $o = fpost(j)$ such that:
+    \[
+    o \succ_j \sigma(j).
+    \]
+
+    \item If $\sigma(j) = fpost(j)$ and $\sigma(k) = fpost(k)$, then both agents receive their $fpost$.
+
+    Since $\mu$ is assumed not popular, this contradicts the characterization of Abraham et al., which requires that every agent is matched to either its $fpost$ or $spost$, and that every $fpost$ is matched. Hence, this situation cannot occur under our assumption.
+
 \end{enumerate}
-This proves the reciprocity lemma.
 
+\medskip
 
-Let's try to prove this lemma by contradiction.
-Supposing the property \textbf{Prop:} $\exists i,j \in N$ such that $\sigma(j) P_i \sigma(i)$ and $\exists o \in O$ such that $o \succ_j \sigma(j) $ is true. 
-From this property, we assume the matching $\mu$ not possibly popular.
-
-A matching $\mu$ is possibly popular if it is popular in at least one completion of the partial preference profile.
-\paragraph{Initialization}
-For 2 agents and 2 objects:
+In all cases, we obtain:
 \[
-i: \sigma(j) P_i \framed{$\sigma(i)$}
+\exists o \in O \text{ such that } o \succ_j \sigma(j).
 \]
-\[
-j: \sigma(i) P_j \framed{$\sigma(j)$}
-\]
-$\exists \mu' = \{(i, \sigma(j)),(j, \sigma(i))\}$ such that $|\{i\in N: \sigma(i)\succ_i \sigma'(i)\}| < |\{i\in N: \sigma'(i)\succ_i \sigma(i)\}|$ (0 $<$ 2).
-Hence $\mu$ is not a popular matching whatever the completion (there are only two possible completions for this setting) for 2 agents and 2 objects.
-\paragraph{Inheritance}
-We suppose the property Prop true for n agents and n objects and we want to determine whether the property is still true for n+1 agents and n+1 objects.
-If $\mu$ is not popular at rank n, this means there is no completion such that $|\{i\in N: \sigma(i)\succ_i \sigma'(i)\}| \geq |\{i\in N: \sigma'(i)\succ_i \sigma(i)\}|$.
-Let's add an agent and an object:
-By contraposition, we have
-\[
-A => B
-\]
-\[
-not B => not A
-\]
-where\\
-B: $\forall$ completions over $n+1$, $\mu$ is not popular.\\
-A: $\forall$ completions over $n$, $\mu$ is not popular.\\
-not B: $\exists$ a completion over $n+1$, such that $\mu$ is popular.\\
-not A: $\exists$ a completion over $n$, such that $\mu$ is popular.\\
 
-In other words, if we suppose there exists a completion over $n+1$ such that $\mu$ is popular, then this implies that there exists a completion over $n$ such that $\mu$ is popular. 
-However, we said that $\mu$ is not popular over $n$ so all completions over $n+1$ make $\mu$ not popular.\\
-Nevertheless, we must show that if $\exists$ a completion over $n+1$ such that $\mu$ is popular then its restriction over $n$ is still popular.
+\medskip
 
-Over $n+1$: $|\{i\in N: \sigma(i)\succ_i \sigma'(i)\}| \geq |\{i\in N: \sigma'(i)\succ_i \sigma(i)\}| \forall \mu'$
-We restreint by removing 1 agent and 1 object (called agent k and object k):
-\begin{enumerate}
-    \item agent k $\in \{i\in N: \sigma(i)\succ_i \sigma'(i), \forall \mu'\}$ and object k is not $\sigma(k)$
-    \item agent k $\in \{i\in N: \sigma(i)\succ_i \sigma'(i), \forall \mu'\}$ and object k is $\sigma(k)$
-    \item agent k $\in \{i\in N: \sigma'(i)\succ_i \sigma(i), \forall \mu'\}$ and object k is not $\sigma(k)$
-    \item agent k $\in \{i\in N: \sigma'(i)\succ_i \sigma(i), \forall \mu'\}$ and object k is $\sigma(k)$
-\end{enumerate}
+Therefore:
+\[
+\exists i,j \in N \text{ such that } \sigma(j) \succ_i \sigma(i)
+\quad \text{and} \quad
+\exists o \in O \text{ such that } o \succ_j \sigma(j).
+\]
+
+This proves the desired property.
+
+\qed
+
+
+% =>
+
+% Suppose for a contradiction that the matching $\mu$ is popular for a given completion and $\exists i,j \in N$ such that $\sigma(j) P_i \sigma(i)$ and $\exists o \in O$ such that $o \succ_j \sigma(j) $.
+% Given the lemma 2.4 describe in the paper "Popular Matching" of Abraham et al, a matching is popular if and only if each agent is matched either with its fpost or its spost and every fpost is matched.
+
+% \begin{itemize}
+%     \item The agent i is not matched to its fpost because $\sigma(j) \succ_i \sigma(i)$. So agent i will be matched to its spost and agent j will be matched to the fpost of i.
+%     \item The agent j is not matched to its fpost because $\exists o \in O$ such that $o \succ_j \sigma(j) $. So agent j will be matched to its spost and $o$ is its fpost.
+%     \item Let $\mu'$ be another matching such that $\sigma'(i) = fpost(i) = \sigma(j)$ and $\sigma'(j) = fpost(j) = o$. So agents i and j will prefer $\mu'$ to $\mu$ and by consequence, $\mu'$ is more popular than $\mu$. It is a contradiction because we have assumed that $\mu$ is popular.
+% \end{itemize}
+% To conclude, this proves the lemma.
+
+% <=
+% Suppose that the matching $\mu$ is not popular.
+% So $\exists i \in N$ such that $\sigma(i) \notin \{fpost(i), spost(i)\}$. 
+% By consequence, $\exists j,k \in N$ such that $\sigma(j) = fpost(i)$ and $\sigma(k) = spost(i)$.
+% \begin{enumerate}
+%     \item Either $\sigma(j) = fpost(j)$ and $\sigma(k) = fpost(k)$. It is a contradiction because $\mu$ is not popular ($|\{i\in N: \sigma(i)\succ_i \sigma'(i)\}| < |\{i\in N: \sigma'(i)\succ_i \sigma(i)\}|$).
+%     \item Either one of them, e.g k gets its fpost and j is matched with its spost. So $\exists o \in O$ such that $o \succ_j \sigma(j)$ and $\sigma(j) \succ_i \sigma(i)$. The property is verified.
+%     \item Either one of them, e.g k gets its fpost and $\sigma(j) \notin \{fpost(j), spost(j)\}$. So $\exists o \in O$ such that $o \succ_j \sigma(j)$ and $\sigma(j) \succ_i \sigma(i)$. The property is verified.
+% \end{enumerate}
+% This proves the reciprocity lemma.
+
+
+% Let's try to prove this lemma by contradiction.
+% Supposing the property \textbf{Prop:} $\exists i,j \in N$ such that $\sigma(j) P_i \sigma(i)$ and $\exists o \in O$ such that $o \succ_j \sigma(j) $ is true. 
+% From this property, we assume the matching $\mu$ not possibly popular.
+
+% A matching $\mu$ is possibly popular if it is popular in at least one completion of the partial preference profile.
+% \paragraph{Initialization}
+% For 2 agents and 2 objects:
+% \[
+% i: \sigma(j) P_i \framed{$\sigma(i)$}
+% \]
+% \[
+% j: \sigma(i) P_j \framed{$\sigma(j)$}
+% \]
+% $\exists \mu' = \{(i, \sigma(j)),(j, \sigma(i))\}$ such that $|\{i\in N: \sigma(i)\succ_i \sigma'(i)\}| < |\{i\in N: \sigma'(i)\succ_i \sigma(i)\}|$ (0 $<$ 2).
+% Hence $\mu$ is not a popular matching whatever the completion (there are only two possible completions for this setting) for 2 agents and 2 objects.
+% \paragraph{Inheritance}
+% We suppose the property Prop true for n agents and n objects and we want to determine whether the property is still true for n+1 agents and n+1 objects.
+% If $\mu$ is not popular at rank n, this means there is no completion such that $|\{i\in N: \sigma(i)\succ_i \sigma'(i)\}| \geq |\{i\in N: \sigma'(i)\succ_i \sigma(i)\}|$.
+% Let's add an agent and an object:
+% By contraposition, we have
+% \[
+% A => B
+% \]
+% \[
+% not B => not A
+% \]
+% where\\
+% B: $\forall$ completions over $n+1$, $\mu$ is not popular.\\
+% A: $\forall$ completions over $n$, $\mu$ is not popular.\\
+% not B: $\exists$ a completion over $n+1$, such that $\mu$ is popular.\\
+% not A: $\exists$ a completion over $n$, such that $\mu$ is popular.\\
+
+% In other words, if we suppose there exists a completion over $n+1$ such that $\mu$ is popular, then this implies that there exists a completion over $n$ such that $\mu$ is popular. 
+% However, we said that $\mu$ is not popular over $n$ so all completions over $n+1$ make $\mu$ not popular.\\
+% Nevertheless, we must show that if $\exists$ a completion over $n+1$ such that $\mu$ is popular then its restriction over $n$ is still popular.
+
+% Over $n+1$: $|\{i\in N: \sigma(i)\succ_i \sigma'(i)\}| \geq |\{i\in N: \sigma'(i)\succ_i \sigma(i)\}| \forall \mu'$
+% We restreint by removing 1 agent and 1 object (called agent k and object k):
+% \begin{enumerate}
+%     \item agent k $\in \{i\in N: \sigma(i)\succ_i \sigma'(i), \forall \mu'\}$ and object k is not $\sigma(k)$
+%     \item agent k $\in \{i\in N: \sigma(i)\succ_i \sigma'(i), \forall \mu'\}$ and object k is $\sigma(k)$
+%     \item agent k $\in \{i\in N: \sigma'(i)\succ_i \sigma(i), \forall \mu'\}$ and object k is not $\sigma(k)$
+%     \item agent k $\in \{i\in N: \sigma'(i)\succ_i \sigma(i), \forall \mu'\}$ and object k is $\sigma(k)$
+% \end{enumerate}
+
 
 \end{document}
