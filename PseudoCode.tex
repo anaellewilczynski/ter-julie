@@ -51,6 +51,15 @@ If $\exists i,j \in N$ such that $\sigma(j) P_i \sigma(i)$ for $o \in O$ such th
 \end{proposition}
 
 
+\begin{proposition}[Find Possibly popular completion - Rewritting]
+For a given possibly popular matching on a partial profile $P$, there is a complete completion that can be constructed as follows:
+If $\exists i,j \in N$ such that
+\begin{itemize}
+    \item $\sigma(j) P_i \sigma(i)$ and for $o \in O$ such that $(\sigma(j),o) \notin P$ add $(\sigma(j),o) in \succ_j$
+    \item $(\sigma(i), \sigma(j)) \notin P_i$, add $(\sigma(i),\sigma(j)) in \succ_i$
+\end{itemize}
+\end{proposition}
+
 \textbf{Necessarily popular matching}
 
 \begin{proposition}[Find Necessarily popular matching]
@@ -80,7 +89,7 @@ Return False (it is not a necessarily popular matching).
 
 \subsection{Implementation with pairwise comparison}
 \begin{algorithm}[H]
-\caption{VerifPossiblePopularMatching}
+\caption{VerifPossiblyPopularMatching}
 \begin{algorithmic}[1]
     \State \textbf{Input:} $O$ the set of n objects, $N$ the set of n agents, $P = (P_1, ..., P_n)$ the partial profile such that $P_i = [(o_l, o_k), ...]$ is the list of pairwise partial preferrence of agent i, $\mu = \{1\colon \sigma(1), ..., n\colon \sigma(n)\}$ is the matching ($\sigma(i)$ is the assigned object to i in the matching). 
     \State \textbf{Output:} boolean indicating either the matching $\mu$ is possibly popular
@@ -97,6 +106,29 @@ Return False (it is not a necessarily popular matching).
         \EndFor
     \EndFor
     \State \Return True
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[H]
+\caption{FindPossiblyPopularMatching}
+\begin{algorithmic}[1]
+    \State \textbf{Input:} $O$ the set of n objects, $N$ the set of n agents, $P = (P_1, ..., P_n)$ the partial profile such that $P_i = [(o_l, o_k), ...]$ is the list of pairwise partial preferrence of agent i, $\mu = \{1\colon \sigma(1), ..., n\colon \sigma(n)\}$ is the perfect matching ($\sigma(i)$ is the assigned object to i in the matching). 
+    \State \textbf{Output:} A complete completion that making the matching popular.
+    \State $\succ$ the complete completion $\leftarrow$ copy of the partial completion $P$
+    \For{each agent $i \in N$}
+        \For{each objects $sigma(j)$ and agents $j$ matched $\in \mu$}
+           \If{$\exists (\sigma(j), \sigma(i)) \in P_i$}
+                \For{each objects $o \in O \backslash \{\sigma(j)\}$ }
+                    \If{$(\sigma(j), o) \notin P_j$}
+                        \State Add $(\sigma(j), o)$ in $\succ_j$
+                    \EndIf
+                \EndFor
+           \ElsIf{$\nexists (\sigma(i), \sigma(j)) \in P_i$}
+                \State Add $(\sigma(i), \sigma(j))$ in $\succ_i$
+           \EndIf
+        \EndFor
+    \EndFor
+    \State \Return $\succ$
 \end{algorithmic}
 \end{algorithm}
 
