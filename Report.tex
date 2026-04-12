@@ -1,0 +1,94 @@
+\documentclass{article}
+\usepackage{graphicx} 
+
+\title{Report TER}
+\author{julie dornat}
+\date{April 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Abstract}
+\section{Introduction}
+
+Computational social choice studies collective decision-making problems involving multiple agents with potentially conflicting preferences. 
+Its goal is to design mechanisms that aggregate individual preferences into a collective decision while satisfying desirable properties such as fairness and efficiency. 
+Typical fairness criteria include maxmin and envy-freeness, which aim to capture the extent to which agents are satisfied with the outcome.
+
+A central challenge in computational social choice lies in the elicitation and representation of agents' preferences over a set of possible alternatives or allocations of resources. 
+Most existing results assume complete preference information, which limits their applicability in realistic scenarios.
+In many practical settings, it is unrealistic to assume that agents can fully specify their preferences, as the number of possible allocations grows combinatorially with the number of resources. 
+This makes preference elicitation both cognitively demanding for agents and computationally challenging. 
+As a result, a significant line of research focuses on developing compact and expressive preference models that mitigate these difficulties.
+
+At the same time, collective decision-making must balance multiple, often conflicting objectives. 
+As discussed in the \textit{Handbook of Computational Social Choice, Chapter 12}, fairness criteria such as envy-freeness or maximin may conflict with efficiency requirements such as Pareto efficiency or utilitarian optimality, which aim at maximizing the overall welfare and avoiding loss of resources. 
+This results in seeking solution able to handle the tradeoff between fairness and efficiency.
+
+This motivates the study of preference representations that capture only partial information, while still allowing one to reason about fairness and efficiency properties of the resulting outcomes.
+In this context, partial preferences provide a natural framework to model incomplete knowledge about agents' preferences. 
+As emphasized by \textit{Kenig and Kimelfeld} (2019), incomplete preferences constitute a distinct form of uncertainty.
+
+Rather than assuming fully specified rankings, agents may only reveal limited or partial information. 
+As discussed by \textit{Jérôme Lang} (2020), this raises a fundamental question: how can one make reliable collective decisions when the available preference information is incomplete? and when can the eliciting process can be stopped to deduce reliable solution?
+To address this issue, the notions of possible and necessary outcomes have been introduced, allowing one to reason about decisions that hold under some or all completions of the missing information.
+
+Computational social choice has applications in a wide range of domains, including voting, fair division, matching, multi-agent systems, and information retrieval. 
+In this work, we focus in particular on fair division and matching problems.
+
+Fair division concerns the allocation of resources among agents in a fair manner, and applies to both divisible and indivisible goods. 
+A classical example in the indivisible setting is the house allocation problem, where each agent is assigned a single house. 
+Such settings can also be viewed through the lens of matching theory, where agents and objects form two sets to be matched.
+
+Matching theory provides a rich framework for modeling allocation mechanisms, including concepts such as perfect matching and popular matchings. 
+
+\paragraph{Research Question}
+
+This report investigates the following question:
+
+\begin{quote}
+How can we design fair allocation or matching mechanisms when agents' preferences are only partially known?
+\end{quote}
+
+More specifically, we explore how notions such as possible and necessary envy-freeness can be used to reason about fairness under incomplete preferences, and how these ideas can be connected to matching frameworks.
+
+
+% La théorie du choix social formalise des problématique de décision collective impliquants plusieurs agents ayant des préférences possiblement conflictuelles. 
+% Ce domaine met en oeuvre des méchanismes d'aggrégation des préférences afin de trouver une solution qui satisfait des critères tels que l'équité. 
+% L'équité définit des quantifieurs permettant d'évaluer la satisfaction des agents lorsqu'on considère une alternative possible. On cherche alors à déterminer une décision collective qui assure le social welfare. Entre autres, il existe l'envy-freeness et la pareto efficiency.
+% Pour cela, une partie des recherches se focalise sur l'élication des préférences des agents et sur la modélisation de ces dernières de manière compacte, pour rendre les algorithmes calculable en temps acceptable.
+% Dans la pratique, il n'est pas possible de connaitre l'ensemble des préférences des agents, la tâche d'élicitation étant cognitivement chronophage et la quantité d'information pouvant freiner la trouvaille d'une solution socialement acceptable.
+
+% Le choix computationel social est polyvalent et se trouve dans plusieurs domaines tels le vote, le matching, l'allocatiob équitable, les systèmes multiagents et l'information retrieval. 
+% Au cours du TER, nous nous sommes intéressé à l'allocation équitable d'objets indivisible. Un cas particulier d'application est le problème House allocation où chaque agent se voit attribuer une maison. 
+% On a alors deux sous ensembles que l'on match. Cela amène alors à des considérations de problème de matching.
+
+% Parmi les concepts fondamentaux de la théorie du choix social, le matching sert à modéliser des mécanismes d'allocation bipartite. Il est très utilisé en théorie des jeux et en économie.
+
+% Les préférences partielles modélisent l'incertitude sur les préférences élicités auprès des agents. Kenig et Kimelfeld définissent les préférences partielles comme une sous branche de l'incertitude au même titre que la probabilité.  
+% La communication des préférences peut être une tâche cognitivement couteuse pour les agents lorsque le nombre d'allocations possibles augmente. 
+% C'est pourquoi, au cours des années, les chercheurs ont développé plusieurs manières d'exprimer les préférences dans le but de réduire le domaine des profiles admissibles et d'obtenir des représentations généralisables à certaines applications comme le vote, le matching, l'allocation équitable, l'information retrieval, les systèmes de recommandation et les systèmes multiagents.
+
+% Partial preferences are realistic modelling assumption. 
+% In realistic collective decision making, assuming that all the preferences are known is untenable due to the exponential number of items combinaison. 
+% Indeed, the cognitive load and exponential communication burden of expression of preference limits the finding of social decision. 
+% Jerome Lang in his survey (Collective Decision Making under Incomplete Knowledge: Possible and Necessary Solutions 2020) studies partial knowledge and questions at which moment can we stop the elicitation process to deduce a reliable solution. 
+% In other word, when incomplete information is too weak to support meaningful conclusion.
+% For that, he introduces the notions of possibly and necessarily criteria.
+
+% From "Chapter 6: Computational Social Choice" of Multiagent Systems book, written by Felix Brandt, Vincent Conitzer and Ulle Endriss: Preference aggregation: how can the preferences of each agent be aggregated to produce a unique social representation of preferences to reduce the system to a single rational decision maker.
+% \paragraph{Research questions} comment décider quand l'information est incomplète?
+
+
+\section{Preliminaries}
+
+\section{Preference partielle}
+
+
+\section{Fair division with partial preferences}
+\section{Matching and popularity}
+\section{Possibly and Necessarily Popular Matching}
+\section{Openings}
+
+\end{document}
