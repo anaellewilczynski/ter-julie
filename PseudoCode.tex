@@ -60,8 +60,6 @@ If $\exists i,j \in N$ such that
 \end{itemize}
 \end{proposition}
 
-\textbf{Necessarily popular matching}
-
 \begin{proposition}[Find Necessarily popular matching]
 If $\exists i,j \in N$ such that $\sigma(j) P_i \sigma(i)$ and $o \in O$
 \begin{itemize}
@@ -514,6 +512,39 @@ This proves the desired property.
 
 \qed
 
+\subsection{Proof Find Possibly Popular Completion}
+
+\paragraph{Hypotheses}
+\begin{itemize}
+    \item $N$ is a set of $n$ agents and $O$ a set of $n$ objects.
+    \item We assume a \textbf{perfect matching}: $|N| = |O|$ and all agents/objects are matched.
+    \item Preferences are given as \textbf{partial orders} (pairwise comparisons).
+    \item We consider \textbf{completions of the partial preference profile $P$} $\succ$.
+    \item $\mu$ is a popular matching.
+\end{itemize}
+
+\paragraph{Definitions}
+\begin{itemize}
+    \item $\forall i \in N, \forall o \in O \backslash \{\sigma(i)\}$, $\exists (\sigma(i), o)$ or $(o, \sigma(i))$ in $\succ_i$.
+    \item \textbf{From Handbook of Computational Social Choice (p26):} $a \gtrsim b$ or $b \gtrsim a$ for all $a \neq b \in O$ and any voter $i \in N$
+\end{itemize}
+
+\paragraph{Proof}
+We suppose $\mu$ is a possibly popular and perfect matching. 
+Suppose we have found a completion that makes $\mu$ popular such that $\exists i,j \in N$:
+\begin{itemize}
+    \item if $\sigma(j) P_i \sigma(i)$ and for $o \in O$ such that $(\sigma(j), o) \notin P_j$ then $(\sigma(j), o) \in \succ_j$
+    \item if $(\sigma(i), \sigma(j)) \notin P_i$ then $(\sigma(i), \sigma(j)) \in \succ_i$
+\end{itemize}
+Let's prove that this completion is indeed complete and that $\mu$ is a popular matching under this completion.\\
+\textbf{Intuition:}
+$O$ is the set of all objects and because $\mu$ is a perfect matching, $O$ contains all the matched objects. 
+So we can rewritte $O$ as $O = \{\sigma(k) : k \in N\}$.
+For each object $\sigma(k) \in O \backslash \{\sigma(i)\}$ and for each agent $i \in N$,
+\begin{itemize}
+    \item either $(\sigma(i), \sigma(k)) \in \succ_i$
+    \item or $(\sigma(k), \sigma(i))$ and $(\sigma(k), o) \in \succ_j$ for all $o \in O$
+\end{itemize}
 
 % =>
 
