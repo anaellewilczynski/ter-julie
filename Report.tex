@@ -3,10 +3,11 @@
 \usepackage[margin=2.5cm]{geometry}
 \usepackage{natbib}
 
+
 \newcommand{\agents}{N}
 
 \title{Report TER}
-\author{julie dornat}
+\author{Julie Dornat}
 \date{April 2026}
 
 \begin{document}
@@ -22,7 +23,7 @@ Typical fairness criteria include maxmin and envy-freeness, which aim to capture
 
 A central challenge in computational social choice lies in the elicitation and representation of agents' preferences over a set of possible alternatives or allocations of resources. 
 Most existing results assume complete preference information, which limits their applicability in realistic scenarios.
-In many practical settings, it is unrealistic to assume that agents can fully specify their preferences, as the number of possible allocations grows combinatorially with the number of resources. 
+In many practical settings, it is unrealistic to assume that agents can fully specify their preferences, as the number of possible allocations grows combinatorially with the number of resources (\textit{Handbook of Computational Social Choice, Chapter 10, p224}). 
 This makes preference elicitation both cognitively demanding for agents and computationally challenging. 
 As a result, a significant line of research focuses on developing compact and expressive preference models that mitigate these difficulties.
 
@@ -57,39 +58,88 @@ How can we design fair allocation or matching mechanisms when agents' preference
 
 More specifically, we explore how notions such as possible and necessary envy-freeness can be used to reason about fairness under incomplete preferences, and how these ideas can be connected to matching frameworks.
 
+% However, many voting schemes (and other social
+% choice mechanisms) make stringent assumptions about the preferences provided by
+% voters. For instance, it is usually assumed that each voter provides a complete pref-
+% erence ranking of all alternatives under consideration.
 
-% La théorie du choix social formalise des problématique de décision collective impliquants plusieurs agents ayant des préférences possiblement conflictuelles. 
-% Ce domaine met en oeuvre des méchanismes d'aggrégation des préférences afin de trouver une solution qui satisfait des critères tels que l'équité. 
-% L'équité définit des quantifieurs permettant d'évaluer la satisfaction des agents lorsqu'on considère une alternative possible. On cherche alors à déterminer une décision collective qui assure le social welfare. Entre autres, il existe l'envy-freeness et la pareto efficiency.
-% Pour cela, une partie des recherches se focalise sur l'élication des préférences des agents et sur la modélisation de ces dernières de manière compacte, pour rendre les algorithmes calculable en temps acceptable.
-% Dans la pratique, il n'est pas possible de connaitre l'ensemble des préférences des agents, la tâche d'élicitation étant cognitivement chronophage et la quantité d'information pouvant freiner la trouvaille d'une solution socialement acceptable.
+\section{Preference Models}
 
-% Le choix computationel social est polyvalent et se trouve dans plusieurs domaines tels le vote, le matching, l'allocatiob équitable, les systèmes multiagents et l'information retrieval. 
-% Au cours du TER, nous nous sommes intéressé à l'allocation équitable d'objets indivisible. Un cas particulier d'application est le problème House allocation où chaque agent se voit attribuer une maison. 
-% On a alors deux sous ensembles que l'on match. Cela amène alors à des considérations de problème de matching.
+Partial preferences aim to represent situations in which agents do not fully specify their preferences over all possible alternatives. 
+Instead of a complete description, only partial information is available, which induces uncertainty regarding the evaluation of outcomes with respect to properties such as fairness or efficiency.
 
-% Parmi les concepts fondamentaux de la théorie du choix social, le matching sert à modéliser des mécanismes d'allocation bipartite. Il est très utilisé en théorie des jeux et en économie.
+From an informational perspective, partial preferences can be seen as a compact representation of agents' preferences. 
+This is closely related to the notion of representation and compilation complexity discussed in the \textit{Handbook of Computational Social Choice, Chapter 10, section 10.7}, where the goal is to encode preference information in a concise way while preserving the ability to reason about it.
 
-% Les préférences partielles modélisent l'incertitude sur les préférences élicités auprès des agents. Kenig et Kimelfeld définissent les préférences partielles comme une sous branche de l'incertitude au même titre que la probabilité.  
-% La communication des préférences peut être une tâche cognitivement couteuse pour les agents lorsque le nombre d'allocations possibles augmente. 
-% C'est pourquoi, au cours des années, les chercheurs ont développé plusieurs manières d'exprimer les préférences dans le but de réduire le domaine des profiles admissibles et d'obtenir des représentations généralisables à certaines applications comme le vote, le matching, l'allocation équitable, l'information retrieval, les systèmes de recommandation et les systèmes multiagents.
+During our literature review, we identified several families of partial preference models, which differ in the type and amount of information elicited from agents.
 
-% Partial preferences are realistic modelling assumption. 
-% In realistic collective decision making, assuming that all the preferences are known is untenable due to the exponential number of items combinaison. 
-% Indeed, the cognitive load and exponential communication burden of expression of preference limits the finding of social decision. 
-% Jerome Lang in his survey (Collective Decision Making under Incomplete Knowledge: Possible and Necessary Solutions 2020) studies partial knowledge and questions at which moment can we stop the elicitation process to deduce a reliable solution. 
-% In other word, when incomplete information is too weak to support meaningful conclusion.
-% For that, he introduces the notions of possibly and necessarily criteria.
+\paragraph{(1) Preference Representation Models}
 
-% From "Chapter 6: Computational Social Choice" of Multiagent Systems book, written by Felix Brandt, Vincent Conitzer and Ulle Endriss: Preference aggregation: how can the preferences of each agent be aggregated to produce a unique social representation of preferences to reduce the system to a single rational decision maker.
-% \paragraph{Research questions} comment décider quand l'information est incomplète?
+\begin{itemize}
+    \item \textbf{Ordinal preferences:} agents provide a ranking over alternatives or subsets of alternatives. Extensions such as the responsive set extension (\textit{Fair Division under Ordinal Preferences:
+Computing Envy-Free Allocations of Indivisible Goods} Bouveret et al, Brams et al (2005)) allow one to derive preferences over bundles from rankings over individual items.
+    \item \textbf{Cardinal preferences:} agents assign numerical utilities to alternatives, capturing the intensity of preferences.
+\end{itemize}
+
+\paragraph{(2) Partial Elicitation Models}
+
+\begin{itemize}
+    \item \textbf{Truncated preferences:} agents report only part of their ranking.
+    \begin{itemize}
+        \item \textbf{Top-$k$ preferences:} only the $k$ most preferred alternatives are reported.
+        \item \textbf{Bottom-$k$ preferences:} only the $k$ least preferred alternatives are reported, leaving the rest unranked. In this case, the most preferred alternative may remain unknown.
+        \item \textbf{Set ranking queries:} agents provide a ranking into a subset of alternatives.
+        \item \textbf{Intervals of cardinal preferences:} agents provide ranges of utility values instead of a single utility.
+    \end{itemize}
+    
+    \item \textbf{Pairwise comparisons:} agents indicate which alternative is preferred between two options. These comparisons are central in majority-based methods and Condorcet-based reasoning (e.g., Condorcet winner, Copeland's rule).
+
+    \item \textbf{Positional queries:} agent provides the alternative she ranks at a given position, leading to the construction of scoring vector. Using these scoring vectors in voting context, Kenig and Kimelfeld (2019) analyze the computational complexity of estimating the probability of an election outcome under uncertainty.
+
+    \item \textbf{Approval and veto preferences:}
+    \begin{itemize}
+        \item \textbf{Approval preferences:} agents classify alternatives into approved and non-approved sets.
+        \item \textbf{Veto preferences:} agents reject a subset of alternatives.
+    \end{itemize}
+
+    \item \textbf{Acceptability-based preferences:} agents specify which alternatives are acceptable, often modeled using bipartite graphs in matching problems. For instance, in the marriage problem, some agents may find certain allocations unacceptable. Thus, not all objects are allocable to a given agent. Acceptability therefore amounts to defining a list of preferences by excluding those on which the agent issues a right of veto.
+
+    \item \textbf{Query-based elicitation models:}
+    \begin{itemize}
+        \item \textbf{Next-best queries:} agents iteratively reveal their most preferred alternative among those the remaining ones. We call it top k queries when we stop the retrieval at rank k.
+        \item \textbf{Split queries:} agents partition a subset of alternatives into ordered groups. More precisely, the Chapter 10 of the Handbook of Computational Social Choice explains that agent is asked to partition a subset of alternatives into tow or more subsets and order them such that all alternatives in a higher-ranked subset are preferred to all alternatives in a lower-ranked subset. The k-approval is a special case where two blocks of size k and m-k are created.
+        \item \textbf{Choice queries:} agents select their most preferred alternative from a subset.
+    \end{itemize}
+\end{itemize}
+
+\paragraph{(3) Structured Preference Domains}
+
+\begin{itemize}
+    \item \textbf{Single-peaked preferences:} agents have a most preferred option, and their preferences decrease as they move away from this peak. It assumes that there exists an axis on which alternatives are positionned independently of the agents. In the paper "Single-peaked consistency and its complexity" Bruno Escoffier, Jérôme Lang, Meltem ¨Ozt¨urk study whether the preference profiles are single peaked and how to determine the axis based on some agents' preferences.
+    \item \textbf{Euclidean preferences:} preferences are derived from distances in a geometric space. This multidimensional space is defined by characteristics used to describe and compare alternatives. The paper "Euclidean preferences" of Anna Bogomolnaia and Jean-François Laslier defines Euclidean preferences, such as the geometric representation as a point in a d-dimensional space. The alternative is judged as good as it is close to the ideal point given by the best preference of an agent. The authors also consider convex preferences, which induce intermediate preferences between two options that agent prefers. They study propositions over the sufficient dimension for representing any Euclidean preference profile.
+    \item \textbf{Attribute-based preferences:} agents have different preference profile depending on the attribute considered (politics, economics, etc).
+\end{itemize}
+
+\paragraph{(4) Probabilistic Models}
+
+\begin{itemize}
+    \item \textbf{Probabilistic preference models:} preferences are drawn from a probability distribution (e.g., impartial culture or Polya-Eggenberger urn models), allowing one to reason under uncertainty.
+\end{itemize}
+
+The Chapter 10 of the Handbook of Computational Social Choice, presents most of these preferences models.
+
+These models illustrate different ways of reducing the amount of information required from agents while maintaining the ability to reason about collective decisions. 
+Not all these models are equally relevant for the study of fairness under incomplete information, which motivates focusing on specific classes in the remainder of this work.
+
+In practice, the choice of a preference model has a direct impact on both the expressiveness of the representation and the computational complexity of the associated problems. 
+It therefore depends on the target application and the type of reasoning required. Partial preference models are widely used in applications such as voting and matching problems (e.g., house allocation, hospital-resident or marriage problems). 
+Simpler models reduce the elicitation burden and facilitate computation, while richer models allow for more expressiveness at the cost of increased complexity.
+
+A key advantage of partial preferences is that they reduce the amount of information agents need to communicate, which can improve the reliability of the elicited data while maintaining sufficient structure for decision-making.
 
 \section{Preliminaries}
 
 for all agents $i \in \agents$
-
-\section{Preference models}
-
 
 \section{Fair division with partial preferences}
 \section{Matching and popularity}
