@@ -2,9 +2,31 @@
 \usepackage{graphicx} 
 \usepackage[margin=2.5cm]{geometry}
 \usepackage{natbib}
+\usepackage{tikz}
+\usepackage{booktabs}
+
+% Shortcuts %
+\newcommand{\agents}{A}
+\newcommand{\objects}{H}
+\newcommand{\match}{\mu}
+\newcommand{\linearorders}{\mathcal{L}}
 
 
-\newcommand{\agents}{N}
+\newtheorem{example}{Example}
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}{Definition}
+\newtheorem{observation}{Observation}
+\newtheorem{proposition}{Proposition}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{corollary}{Corollary}
+\newtheorem{lemma}{Lemma}
+
+%TikZ commands
+\newcommand*\encircled[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=0.25pt,minimum size=1em] (char) {\vphantom{Ag}#1};}}
+\newcommand*\framed[1]{\tikz[baseline=(char.base)]{
+            \node[draw,inner sep=0.25pt,minimum size=1em] (char) {\vphantom{Ag}#1};}}
+            
 
 \title{Report TER}
 \author{Julie Dornat}
@@ -137,11 +159,75 @@ Simpler models reduce the elicitation burden and facilitate computation, while r
 
 A key advantage of partial preferences is that they reduce the amount of information agents need to communicate, which can improve the reliability of the elicited data while maintaining sufficient structure for decision-making.
 
+\section{Fair division with partial preferences}
+
 \section{Preliminaries}
 
-for all agents $i \in \agents$
+A House allocation instance $I$ with partial preferences is given by $<\agents, \objects, P>$ where $\agents=\{a_1, ..., a_n\}$ is a set of $n$ applicants and $\objects = \{h_1, ..., h_n\}$ is a set of $n$ houses. 
+There are as many houses as applicants ($|\agents| = |\objects|$) and a house cannot be divided to be allocated to several applicants.
 
-\section{Fair division with partial preferences}
+The partial preference profile $P=\{P_1, ..., P_n\}$ is the collection of the lists of incomplete preferences for all applicants. 
+
+Each applicant $a_i$ expresses their incomplete preferences over the set of houses $\objects$ by giving a strict partial order $P_i$ over $\objects$. 
+More precisely, $h_l P_i h_k$ denotes the pairwise comparison of the houses $h_l$ and $h_k$ for applicant $a_i$, yielding that applicant $a_i$ prefers the house $h_l$ to $h_k$.
+The preferences are transitive, i.e if an applicant $a_i$ prefers a house $h_l$ to a house $h_k$ and $h_k$ is preferred to a house $h_z$, then she prefers $h_l$ to $h_z$.
+
+We assume that, even though we do not observe them because of the elicitation process, each applicant $a_i \in \agents$ has strict ordinal preferences on the houses, represented by a linear order $\succ_i$ over $\objects$.
+The complete preference profile $\succ$ is the collection of all applicants' preferences, i.e., $\succ=(\succ_1,\dots,\succ_n)$.
+
+To reconstruct the complete preferences, we will consider possible completions of the partial preference profile $P$.
+A linear order $\succ_i$ is a linear extension of $P_i$ if it is compatible with $P_i$, i.e., for all houses $h_l,h_k\in \objects$ if $h_l P_i h_k$ then $h_l \succ_i h_k$. 
+A preference profile $\succ$ is a possible completion of a partial preference profile $P$ if $\succ_i$ is a linear extension of $P_i$, for every $a_i\in \agents$.
+
+A matching is a function that assigns houses to applicants. 
+Each applicant can be assigned to exactly one house and each house can be assigned to at most one applicant. 
+A perfect matching $\match:\agents\to \objects$ is a bijection assigning to every applicant $a_i\in \agents$ a house in $\objects$ denoted by $\match(a_i)$.
+
+A matching $\match$ is \emph{Pareto-optimal} if there is no other matching that is at least as good for all applicants and strictly better for at least one applicant.
+We are interested in a refinement of Pareto-optimality called \emph{popularity}: a matching is popular if there is no other matching that is more popular, i.e., that is preferred by more applicants.
+
+\begin{definition}[Popularity]
+A matching $\match$ is popular if $|\{i\in \agents: \match(i)\succ_i \match'(i)\}|\geq |\{i\in \agents: \match'(i)\succ_i \match(i)\}|$, for every matching $\match'$.
+\end{definition}
+
+A popular matching is trivially Pareto-optimal but is not guaranteed to exist.
+The following characterization of popularity due to \citet{abraham2007popular} allows to decide in polynomial time whether a popular matching exists.
+
+\begin{lemma}[\citet{abraham2007popular}]\label{lem:charact-pop}
+A matching is popular iff every applicant is assigned either her most preferred item or her most preferred item among those that are not ranked first by any applicant.
+\end{lemma}
+
+The definition of popularity can then be adapted to partial preferences by considering possible or necessary outcomes with respect to the possible preference completions.
+
+\begin{definition}[Possible popularity]
+A matching is possibly popular if it is popular in at least one completion of the partial preference profile.
+\end{definition}
+
+\begin{definition}[Necessary popularity]
+A matching is necessarily popular if it is popular in all completions of the partial preference profile. 
+\end{definition}
+
+We can then investigate the following computational problems:
+\smallbreak
+\begin{tabular}{ll}
+\toprule
+\multicolumn{2}{c}{\textsc{ExistPossibPop}/\textsc{ExistNecessPop}} \\
+\midrule
+Instance: & House allocation instance with incomplete preferences $(N,P)$ \\
+Question: & Does there exist a possibly/necessarily popular matching? \\
+\bottomrule
+\end{tabular}
+
+\smallbreak
+\begin{tabular}{ll}
+\toprule
+\multicolumn{2}{c}{\textsc{VerifPossibPop}/\textsc{VerifNecessPop}} \\
+\midrule
+Instance: & House allocation instance with incomplete preferences $(N,P)$, matching $\match$ \\
+Question: & Is $\match$ possibly/necessarily popular? \\
+\bottomrule
+\end{tabular}
+
 \section{Matching and popularity}
 \section{Possibly and Necessarily Popular Matching}
 \section{Openings}
