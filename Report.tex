@@ -78,7 +78,7 @@ This report investigates the following question:
 How can we design fair allocation or matching mechanisms when agents' preferences are only partially known?
 \end{quote}
 
-More specifically, we explore how notions such as possible and necessary envy-freeness can be used to reason about fairness under incomplete preferences, and how these ideas can be connected to matching frameworks.
+More specifically, we explore how notions such as possible and necessary criteria can be used to reason about fairness under incomplete preferences, and how these ideas can be connected to matching frameworks.
 
 % However, many voting schemes (and other social
 % choice mechanisms) make stringent assumptions about the preferences provided by
@@ -159,7 +159,97 @@ Simpler models reduce the elicitation burden and facilitate computation, while r
 
 A key advantage of partial preferences is that they reduce the amount of information agents need to communicate, which can improve the reliability of the elicited data while maintaining sufficient structure for decision-making.
 
-\section{Fair division with partial preferences}
+\section{Fair Division with Partial Preferences}
+
+Fair division is a combinatorial problem that consists in allocating a set of objects among a set of agents while satisfying certain fairness criteria. 
+The nature of the agents' preferences plays a central role in the definition of the problem, as it directly impacts both the expressiveness of the model and the computational complexity of the associated decision procedures.
+
+Early works on fair division often assume cardinal preferences, where agents assign numerical utilities to objects. 
+However, this assumption is often unrealistic in practice, as agents may not be able or willing to provide precise numerical values. 
+In many situations, agents can only express qualitative comparisons (e.g., preferring one object to another) or partial information (e.g., intervals of utilities).
+
+This limitation has motivated the study of ordinal preferences, where agents provide rankings instead of numerical utilities. 
+As a first approach, many works assume that the complete ordinal preferences of the agents are known. 
+However, eliciting complete rankings can be impractical in settings with a large number of objects.
+This limitation motivates the study of partial preferences, where agents only report limited information about their rankings. 
+In this setting, agents typically report ordinal preferences over individual goods, from which preferences over bundles must be inferred.
+
+A key contribution in this direction is due to Brams et al.~(2005), who introduce a pairwise dominance relation in order to derive preferences over bundles from rankings over individual items. 
+This rule, later formalized as the responsive set extension by Aziz (2016), provides the semantic foundation for defining envy between agents: 
+agent $i$ envies agent $j$ if $j$'s bundle dominates $i$'s bundle under this extension. 
+This approach can be interpreted as using preferences over single items as a compact representation of preferences over bundles.
+Moreover, when preferences over individual items are only partially known, this induced preference over bundles becomes itself partial, which is precisely what motivates the study ofpossible and necessary variants of envy-freeness.
+
+\paragraph{Fairness under Incomplete Preferences}
+
+When preferences are incomplete, classical fairness notions such as envy-freeness can no longer be directly evaluated. 
+Instead, fairness must be defined with respect to all possible completions of the agents' preferences.
+
+Bouveret et al. (2010) and Aziz et al.~(2024) define the notions of possible and necessary envy-freeness as follows:
+
+\begin{definition}[Envy-Freeness]
+An allocation is envy-free if no agent prefers the bundle assigned to another agent over her own bundle.
+\end{definition}
+
+\begin{definition}[Possible Envy-Freeness (PEF)]
+An allocation is possibly envy-free if there exists at least one completion of the incomplete preferences under which the allocation is envy-free.
+\end{definition}
+
+\begin{definition}[Necessary Envy-Freeness (NEF)]
+An allocation is necessarily envy-free if it is envy-free under all completions of the incomplete preferences.
+In other words, an allocation satisfies NEF if it is envy-free for all additive valuations that are consistent with the agents' ordinal preferences over individual goods.
+\end{definition}
+
+
+\paragraph{Computational Aspects}
+
+The introduction of possible and necessary fairness leads to new computational questions. 
+In particular, one may ask whether there exists an allocation satisfying a given fairness notion under incomplete information.
+
+Bouveret et al.~(2010) study fair division under ordinal preferences with incomplete information, assuming that agents report only their preferences over individual goods. 
+They show that:
+\begin{itemize}
+    \item deciding whether a possibly envy-free allocation exists is computationally easy to decide;
+    \item deciding whether a necessarily envy-free allocation exists is NP-complete in general;
+    \item the problem becomes polynomial-time solvable when the number of agents is restricted to two.
+\end{itemize}
+
+These results highlight the intrinsic difficulty of reasoning under incomplete preferences, as necessary fairness requires considering all possible completions of the preference profile.
+Necessarily envy-freeness is a particularly strong requirement under incomplete preferences.
+It ensures that an allocation remains envy-free regardless of how the missing preference information is completed.
+
+Aziz et al.~(2024) refine and strengthen these results by proving that the problem of deciding the existence of a necessarily envy-free allocation (ExistsNEF) remains NP-complete for any fixed number of agents greater than or equal to three. 
+They show that the problem is polynomial-time solvable for two agents, but becomes NP-complete when the number of agents is at least three.
+
+\paragraph{Relaxations of Envy-Freeness} Aziz et al.~(2024) also provide several relaxations of envy-freeness.
+One prominent example is envy-freeness up to one item (EF1) and its necessarily envy-free counterpart (NEF1):
+
+\begin{definition}[EF1]
+An allocation satisfies EF1 if, for every pair of agents, any envy can be eliminated by removing at most one item from the bundle of the envied agent.
+\end{definition}
+
+\begin{definition}[NEF1]
+An allocation satisfies necessary EF1 if it satisfies EF1 under all completions of the incomplete preferences. 
+\end{definition}
+
+While these notions provide meaningful relaxations of envy-freeness, the computational complexity of determining the existence of such allocations remains an open question. 
+Aziz et al. (2024) show that a NEF1 allocation can always be obtained via a round-robin procedure.
+
+\paragraph{Conclusion}
+These results highlight a fundamental trade-off between criteria satisfaction and computational complexity in fair division under incomplete preferences. 
+While weaker notions such as possible envy-freeness are easier to satisfy and verify, stronger notions such as necessary envy-freeness provide strong guarantees but are computationally much more demanding.
+
+This motivates the study of intermediate notions, such as EF1 and NEF1, which aim to consider more specific applications.
+
+In the following, we investigate how similar ideas can be adapted to matching problems, in particular through the notion of popularity under incomplete preferences.
+
+
+\section{Matching and popularity}
+
+This fair division problem is similar to one-sided matching problems, where only one set (agents) has preferences over the other set (objects) and we try to match.
+Hall's theorem is a fundamental result in matching theory that defines the condition for the existence of a perfect matching in a bipartite graph.
+In the context of house allocation problems, it can be used to determine whether a perfect matching exists.
+
 
 \section{Preliminaries}
 
@@ -228,11 +318,105 @@ Question: & Is $\match$ possibly/necessarily popular? \\
 \bottomrule
 \end{tabular}
 
-\section{Matching and popularity}
-\section{Possibly and Necessarily Popular Matching}
 \section{Openings}
 
 \bibliographystyle{plainnat}
 \bibliography{ref}
 
 \end{document}
+
+% \section{Mon Brouillon - Fair Division with Partial Preferences}
+
+
+% Fair division is a combinatorial optimization problem that involves dividing a set of objects among a set of agents in a way that satisfies a fairness criterion.
+% The nature of the preferences depends on the problem we want to solve and as previously mentioned, this information influences the complexity of the decision mechanism and its expressiveness.
+
+% Before focusing on the partial preferences problem, researchers have studied cardinal preferences problems, where agents assign numerical utilities to objects. 
+% This approach suggested that agents were able to express preference information as a number, which is not realistic.
+% Indeed, they can prefer to distinguish alternatives by giving an interval or for example, prefer A to B and C to A but prefer B to C.
+% This is why researchers have then studied ordinal preferences problems with omniscient knowledge of the preferences, yielding to the definition of partial preferences.
+
+% All these approaches have contributed to the development of approximate algorithms and mechanisms for fair division.
+% Brams et al. (2005) have introduced the term of possibly and necessarily envy-free allocations by considering metric distorsion problem.
+% They define pairwise dominance relation between bundles of objects in order to infer preferences over bundles from preferences over single goods.
+
+% The concept possible and necessary fairness criterion make it possible to reason on fairness properties under incomplete preferences.
+% Definitions:
+% Envy-Freeness: Each agent that prefers the bundle she received at least as much as any of the bundles received by others. 
+% An allocation is envy-free if no agent prefers the bundle allocated to another agent over her own bundle. 
+% Possible envy-freeness (PEF) allocation: An allocation is possibly envy-free if there exists at least one completion of the agents' preferences over bundles that makes the allocation envy-free. 
+% More precisely, the allocation is possibly envy-free if there exists a set of complete preferences that are consistent with the incomplete preferences and can complete it to makes the allocation envy-free.
+% Necessary envy-freeness (NEF) allocation:: 
+% - From ”Fair Division under Ordinal Preferences: Computing Envy-Free Allocations of Indivisible Goods” of Sylvain Bouveret, Ulle Endriss, Jérôme Lang: An
+% allocation is necessarily envy-free if it is envy-free under all possible completions of the agents' preferences, no matter how the incomplete preferences are completed. 
+% For example, if Alice prefers bundle A to B and Bob prefers B, then the allocation ”Alice gets A, Bob gets B” is necessarily envy-free since Alice will
+% never envy Bob regardless of her preferences over other bundles. 
+% - From ”Mathematical Social Sciences - Computational Complexity of necessary envy-freeness” (2024), Haris Aziz, Ildik´o Schlotter, Toby Walsh: An allocation is necessarily envy-free if it is envy-free for all additive valuations that are consistent with the agents' ordinal preferences. In other words, whatever the way we attribute
+% values to the items, as long as we respect the order of preferences, the allocation is envy free. Whatever the way the preferences of other agents change, the agent does not envy the others.
+
+% Bouveret et al. (2010) has picked up this idea to study the fair division problem under ordinal preferences with incomplete information, using Sci-Nets representation.
+% They find that 
+% - determining whether a possibly envy-free allocation exists is computationally easy.
+% - determining whether a necessarily envy-free allocation exists is NP-complete in general (proposition 7).
+% - for two agent the NEF (Necessarily Envy-Free) problem is polynomial time solvable (proposition 10). 
+% Necessarily envy-freeness is stable to preference incompleteness as it remains envy-free under all possible completions of the agent's unknown preferences. 
+% This fairness property is strong for partial preference. Envy-freeness is evaluated across all possible completions.
+
+% The property 4 Bouveret et al. (2010) establishes the existence of a complete PEF allocation if and only if $m \geq 2n-k$ where m is the number of objects, n the number of agents and k the top ranked goods.
+% This result provides a proof for existence of solution for algorithm implementation and can inspired use for introducing new results on possibly popular matchings.
+
+% Aziz et al. (2024) pursue the work of Bouveret et al. (2010) by proving that the existence of a necessarily envy-freeness allocation is NP-complete when the number of agents is a constant at least 3.
+
+% The proposition 1 of Aziz et al. (2024) provides a characterization of the necessary envy-freeness.
+
+% Envy-Free up to One Item (EF1): From ”Mathematical Social Sciences
+% - Computational Complexity of necessary envy-freeness” (2024), Haris Aziz,
+% Ildik´o Schlotter, Toby Walsh: An allocation satisfies EF1 if, for every pair of
+% agents, any envy disappears after removing at most one item from the bundle
+% of the envied agent. Necessary Envy-Free up to One Item (NEF1):
+% From ”Mathematical Social Sciences - Computational Complexity of necessary
+% envy-freeness” (2024), Haris Aziz, Ildik´o Schlotter, Toby Walsh: An allocation
+% satisfies NEF1 if it is EF1 for all additive valuations consistent with the ordinal
+% preferences. In other words, even under the worst-case valuation compatible
+% with the rankings, any envy between agents can be eliminated by removing a
+% single item from the bundle of the envied agent
+% The main contribution of the paper is a complexity analysis
+% of the problem of determining whether such a complete allocation exists, showing that it becomes computationally intractable (NP-complete) with three or
+% more agents while remaining tractable (polynomial time solvable) in the case
+% of two agents. The computational complexity of the problem ExistsNEF is a
+% function of the number of agents involved and the number of items. Consequently, researchers investigate restricted cases in which the problem becomes
+% computationally tractable. Since the problem of finding complete NEF allocations is polynomial-time solvable for two agents, one possible idea would be
+% to analyze pairwise subproblems between agents and attempt to combine these
+% partial solutions into a global allocation.
+
+
+% Preferences are not constraints but rather a way to evaluate the quality of the solution.
+% The nature of the preferences that agents hold is directly related to the definition of the problem we want to solve (Bouveret et al. 2010).
+
+% In all these article, they try to generalize the approach by considering that the number of agents is different from the number of objects.
+
+
+% Brouillon:
+% Bouveret et al. (2010)
+% Setting in which agents have ordinal preferences over alternative bundles of objects and the knowledge of those preferences is incomplete.
+% Assume that agents report only their ordinal preferences over individual goods.
+% Research question: how to decide whether there exists an allocation that is possibly or necessarily envy-free, given the incomplete information available, if in addition, some mild economic efficiency criteria need to be satisfied.
+% Brams et al. has defined pairwise dominance relation between bundles of objects to infer preferences over bundles from preferences over single goods.
+% "From a computational perspective, we might say that Brams and coauthors are using $\triangleright_i$ [strict linear order over single goods] as a compact representation of $\succ_i$ [incomplete preference order over bundles]."
+% Brams and King and Brams et al. introduce the notion of possibly envy-free and necessarily envy-free allocations.
+% Accordingly to this, the authors define the possible and necessary Pareto-efficiency.
+
+
+% Aziz et al. (2024)
+% Consider setting in which agents have strict ordinal preferences over the items.
+
+
+% Bouveret et al. (2010) établissent que vérifier la PEF est facile, 
+% mais que l'existence d'une allocation NEF est NP-difficile en général, 
+% et polynomial seulement pour 2 agents. La difficulté vient du fait qu'il faut raisonner sur toutes les complétions possibles des préférences.
+
+
+% Aziz et al. (2024) précisent et renforcent ce résultat : 
+% ExistsNEF est NP-complet pour $\geq 3$ agents. 
+% Ils proposent une caractérisation via les inégalités de préfixe (Proposition 1),
+%  qui est l'outil clé pour raisonner sur la NEF sans énumérer toutes les complétions.
