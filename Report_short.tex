@@ -56,8 +56,7 @@ Anaëlle Wilczynski
 
 \maketitle
 
-\section{Abstract}
-
+\begin{abstract}
 Collective decision-making problems often require allocating resources among agents whose preferences are only partially known. 
 Reasoning about fairness and efficiency under such incomplete information is both practically motivated and theoretically challenging, as classical criteria can no longer be directly evaluated.
 
@@ -68,6 +67,7 @@ Then we study popular matchings as an efficiency criterion for the house allocat
 Building on the characterization of \cite{abraham2007popular}, we define possible and necessary variants of popularity under partial preferences and formalize the associated computational problems. 
 As a first step, we consider a simplified setting where agents have strict linear order preferences and a perfect matching is assumed to exist.
 These results lay the groundwork for designing algorithms that handle popularity under incomplete information.
+\end{abstract}
 
 \section{Introduction}
 
@@ -225,7 +225,7 @@ A matching is \emph{Pareto-optimal} if no agent can be made better off without m
 Introduced by \cite{gardenfors1975match}, \emph{Popular matching} offers an alternative optimality notion suited to one-sided models, satisfying a trade-off between the number of agents matched and the respect of preferences.
 A matching is popular if no other matching is preferred by a more agents (see the formal definition in the Preliminaries). 
 
-Aziz et al.~(2013) study the relationship between popularity and envy-freeness, and show that the two criteria are incompatible in general when the number of agents exceeds three. 
+\cite{aziz2013popular} study the relationship between popularity and envy-freeness, and show that the two criteria are incompatible in general when the number of agents exceeds three. 
 However, when both can be satisfied simultaneously, such a matching can be found in polynomial time. 
 This tension between popularity and fairness motivates studying them independently under incomplete preferences.
 
