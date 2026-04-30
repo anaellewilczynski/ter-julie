@@ -44,7 +44,7 @@ Reasoning about fairness and efficiency under such incomplete information is bot
 In this report, we survey existing results on fair division and matching under partial preferences, focusing on the possible and necessary approach. 
 We record type of partial preferences representation and review complexity results for envy-freeness under incomplete ordinal preferences. Then we study popular matchings as an efficiency criterion for the house allocation problem.
 
-Building on the characterization of Abraham et al.~(2007), we define possible and necessary variants of popularity under partial preferences and formalize the associated computational problems. 
+Building on the characterization of \cite{abraham2007popular}, we define possible and necessary variants of popularity under partial preferences and formalize the associated computational problems. 
 As a first step, we consider a simplified setting where agents have strict linear order preferences and a perfect matching is assumed to exist.
 These results lay the groundwork for designing algorithms that handle popularity under incomplete information.
 
@@ -373,6 +373,26 @@ The first problem investigates the existence of a matching that is popular under
 The second problem verifies whether a given matching is popular. It induces checking if there exists a completion that makes the matching popular.
 
 \section{Conclusion}
+
+
+This report has investigated the problem of designing fair and efficient allocation mechanisms when agents' preferences are only partially known. 
+We have surveyed two main lines of research that provide the theoretical foundation for this work.
+
+In the context of fair division, \cite{bouveret2010fair} and \cite{aziz2024computational} have studied possible and necessary envy-freeness under ordinal preferences. 
+Their results reveal an asymmetric: while possible envy-freeness is easy to decide, necessary envy-freeness is NP-complete for three or more agents, and polynomial-time solvable only for two agents. 
+This pattern suggests that reasoning under all completions of a partial preference profile is intrinsically harder than reasoning under some completion.
+
+In the context of matching, \cite{abraham2007popular} provide a complete algorithmic treatment of popular matchings under complete preferences, including an $O(n+m)$ algorithm for strict preferences and an $O(\sqrt{n}\,m)$ algorithm for preferences with ties. 
+Their characterization via fpost and spost serves as a structural baseline for our setting.
+
+Building on these two lines of work, we have defined possible and necessary variants of popularity for the house allocation problem under partial preferences, and formalized the four computational problems \textsc{ExistPossibPop}, \textsc{ExistNecessPop}, \textsc{VerifPossibPop}, and \textsc{VerifNecessPop}. 
+These problems remain open, and constitute the natural next step of this research. 
+In particular, the following questions are of interest:
+\begin{itemize}
+    \item What is the computational complexity of \textsc{ExistPossibPop}, \textsc{ExistNecessPop}, \textsc{VerifPossibPop}, and \textsc{VerifNecessPop}?
+    \item Can the characterization of \cite{abraham2007popular} be used to establish the proof of correctness and coverage of all cases of algorithms for the possibly and necessarily popular matching problems?
+    \item Does the asymmetry observed for envy-freeness --- possible easy, necessary hard --- also hold for popularity?
+\end{itemize}
 
 \bibliographystyle{plainnat}
 \bibliography{ref}
