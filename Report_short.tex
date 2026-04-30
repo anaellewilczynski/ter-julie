@@ -1,6 +1,6 @@
 \documentclass{article}
 \usepackage{graphicx} 
-\usepackage[margin=2.5cm]{geometry}
+\usepackage[margin=2cm]{geometry}
 \usepackage{natbib}
 \usepackage{tikz}
 \usepackage{booktabs}
@@ -9,6 +9,8 @@
 \usepackage{booktabs}
 \usepackage{multirow}
 \usepackage{array}
+
+\usepackage{Report_iclr}
 
 % Shortcuts %
 \newcommand{\agents}{A}
@@ -26,6 +28,9 @@
 \newtheorem{corollary}{Corollary}
 \newtheorem{lemma}{Lemma}
 
+
+\iclrfinaltrue
+
 %TikZ commands
 \newcommand*\encircled[1]{\tikz[baseline=(char.base)]{
             \node[shape=circle,draw,inner sep=0.25pt,minimum size=1em] (char) {\vphantom{Ag}#1};}}
@@ -33,8 +38,18 @@
             \node[draw,inner sep=0.25pt,minimum size=1em] (char) {\vphantom{Ag}#1};}}
             
 
-\title{Report TER}
-\author{Julie Dornat}
+\title{Possible and Necessary Popular Matchings under Partial Preferences}
+
+\author{Julie Dornat 
+\\Artificial Intelligence Master \\
+Department of Computer Science 
+\\ Paris Saclay University \\
+\And
+Anaëlle Wilczynski
+\\ MICS, CentraleSupélec 
+\\ Paris Saclay University
+}
+
 \date{April 2026}
 
 \begin{document}
@@ -283,7 +298,8 @@ A matching is necessarily popular if it is popular in all completions of the par
 \end{definition}
 
 We can then investigate the following computational problems:
-\smallbreak
+\begin{center}
+    \smallbreak
 \begin{tabular}{ll}
 \toprule
 \multicolumn{2}{c}{\textsc{ExistPossibPop}/\textsc{ExistNecessPop}} \\
@@ -302,6 +318,7 @@ Instance: & House allocation instance with incomplete preferences $(N,P)$, match
 Question: & Is $\match$ possibly/necessarily popular? \\
 \bottomrule
 \end{tabular}
+\end{center}
 
 
 The first problem investigates the existence of a matching that is popular under some or all completions of the partial preference profile.
@@ -337,7 +354,7 @@ In particular, the following questions are of interest:
 \section{Taxonomy of Partial Preference Models}
 
 
-\begin{longtable}{p{2.5cm} p{3cm} p{8.5cm}}
+\begin{longtable}{p{2.5cm} p{3cm} p{9cm}}
 \toprule
 \textbf{Category} & \textbf{Model} & \textbf{Description} \\
 \midrule
@@ -422,10 +439,12 @@ profiles depending on the attribute considered
 probability distribution (e.g., impartial culture or 
 Polya-Eggenberger urn models), allowing one to reason 
 under uncertainty. \\
-
+\midrule
 \caption{Taxonomy of partial preference models.}
 \label{tab:preference-models}
 \end{longtable}
+
+
 
 
 \end{document}
