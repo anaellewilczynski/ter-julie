@@ -65,7 +65,7 @@ We record type of partial preferences representation and review complexity resul
 Then we study popular matchings as an efficiency criterion for the house allocation problem.
 
 Building on the characterization of \cite{abraham2007popular}, we define possible and necessary variants of popularity under partial preferences and formalize the associated computational problems. 
-As a first step, we consider a simplified setting where agents have strict linear order preferences and a perfect matching is assumed to exist.
+As a first step, we consider a simplified setting where agents have strict linear order preferences and for which there exists only perfect matchings.
 These results lay the groundwork for designing algorithms that handle popularity under incomplete information.
 \end{abstract}
 
@@ -80,7 +80,7 @@ In many practical settings, the number of possible allocations grows combinatori
 As a result, a significant line of research focuses on developing compact and expressive preference models that mitigate these difficulties.
 
 At the same time, collective decision-making must balance multiple, often conflicting objectives. 
-As discussed in the \citep[Chapter 12]{brandt2016handbook}, fairness criteria such as envy-freeness or maximin may conflict with efficiency requirements such as Pareto efficiency or utilitarian optimality, which aim at maximizing the overall welfare and avoiding loss of resources. 
+As discussed in the \citep[Chapter 12]{brandt2016handbook}, fairness criteria such as envy-freeness or maximin may conflict with efficiency requirements such as Pareto efficiency or utilitarian optimality, which respectively aim at maximizing the overall welfare and avoiding loss of resources. 
 This results in seeking solution able to handle the tradeoff between fairness and efficiency.
 
 This motivates the study of preference representations that capture only partial information, while still allowing one to reason about fairness and efficiency properties of the resulting outcomes.
@@ -222,7 +222,8 @@ This is the case of the house allocation problem, where agents have preferences 
 Matching problems admit several optimality criteria, as surveyed by \cite{cseh2017popular}.
 
 A matching is \emph{Pareto-optimal} if no agent can be made better off without making another agent worse off. 
-Introduced by \cite{gardenfors1975match}, \emph{Popular matching} offers an alternative optimality notion suited to one-sided models, satisfying a trade-off between the number of agents matched and the respect of preferences.
+
+\emph{Popular matching}, introduced by \cite{gardenfors1975match}, offers an alternative optimality notion suited to one-sided models, satisfying a trade-off between the number of agents matched and the respect of preferences.
 A matching is popular if no other matching is preferred by a more agents (see the formal definition in the Preliminaries). 
 
 \cite{aziz2013popular} study the relationship between popularity and envy-freeness, and show that the two criteria are incompatible in general when the number of agents exceeds three. 
@@ -233,7 +234,7 @@ This tension between popularity and fairness motivates studying them independent
 
 A key challenge is that popular matchings are not guaranteed to exist. 
 \cite{cseh2017popular} illustrates this with an example of the voting paradox of Condorcet.
-The matchings$\mu_1$, $\mu_2$, and $\mu_3$ can form a cycle in which each is preferred by a more agents over the next, preventing any of them from being popular.
+The matchings $\mu_1$, $\mu_2$, and $\mu_3$ can form a cycle in which each is preferred by a more agents over the next, preventing any of them from being popular.
 
 \cite{abraham2007popular} provide a algorithmic treatment of the one-sided model. 
 Their algorithm either finds a popular matching of largest cardinality or certifies that none exists. 
@@ -260,9 +261,9 @@ This gives rise to four computational problems which are formally defined in the
 
 A House allocation instance $I$ with partial preferences is given by $<\agents, \objects, P>$ where $\agents=\{a_1, ..., a_n\}$ is a set of $n$ applicants, $\objects = \{h_1, ..., h_n\}$ is a set of $n$ houses, and $P=\{P_1, ..., P_n\}$ is the partial preference profile, i.e. the lists of incomplete preferences for all applicants. 
 
-Each applicant $a_i$ expresses their incomplete preferences over the set of houses $\objects$ by giving a strict partial order $P_i$ over $\objects$. 
+Each applicant $a_i$ expresses their incomplete preferences by giving a strict partial order $P_i$ over the set of houses $\objects$. 
 More precisely, $h_l P_i h_k$ denotes the pairwise comparison of the houses $h_l$ and $h_k$ for applicant $a_i$, yielding that applicant $a_i$ prefers the house $h_l$ to $h_k$.
-The preferences are transitive, i.e if an applicant $a_i$ prefers a house $h_l$ to a house $h_k$ and $h_k$ is preferred to a house $h_z$, then she prefers $h_l$ to $h_z$.
+In this setting, we assume that the preferences are transitive.
 
 We assume that each applicant $a_i \in \agents$ has a complete preference linear order $\succ_i$ over $\objects$, which is unobserved due to the elicitation process.
 The complete preference profile $\succ$ is the collection of all applicants' preferences, i.e., $\succ=(\succ_1,\dots,\succ_n)$.
@@ -341,7 +342,7 @@ Building on these two lines of work, we have defined possible and necessary vari
 These problems remain open, and constitute the natural next step of this research. 
 In particular, the following questions are of interest:
 \begin{itemize}
-    \item Can the problem be solved by properties over popularity?
+    \item Can structural properties of popular matchings, such as the characterization of \cite{abraham2007popular}, be extended to partial preferences to yield tractable algorithms?
     \item What is the computational complexity of \textsc{ExistPossibPop}, \textsc{ExistNecessPop}, \textsc{VerifPossibPop}, and \textsc{VerifNecessPop}?
     \item Can the characterization of \cite{abraham2007popular} be used to establish the proof of correctness and coverage of all cases of algorithms for the possibly and necessarily popular matching problems?
     \item Does the asymmetry observed for envy-freeness --- possible easy, necessary hard --- also hold for popularity?
