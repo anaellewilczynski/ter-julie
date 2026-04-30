@@ -37,6 +37,17 @@
 \maketitle
 
 \section{Abstract}
+
+Collective decision-making problems often require allocating resources among agents whose preferences are only partially known. 
+Reasoning about fairness and efficiency under such incomplete information is both practically motivated and theoretically challenging, as classical criteria can no longer be directly evaluated.
+
+In this report, we survey existing results on fair division and matching under partial preferences, focusing on the possible and necessary approach. 
+We record type of partial preferences representation and review complexity results for envy-freeness under incomplete ordinal preferences. Then we study popular matchings as an efficiency criterion for the house allocation problem.
+
+Building on the characterization of Abraham et al.~(2007), we define possible and necessary variants of popularity under partial preferences and formalize the associated computational problems. 
+As a first step, we consider a simplified setting where agents have strict linear order preferences and a perfect matching is assumed to exist.
+These results lay the groundwork for designing algorithms that handle popularity under incomplete information.
+
 \section{Introduction}
 
 Computational social choice~\citep{brandt2016handbook} studies collective decision-making problems involving multiple agents with potentially conflicting preferences. 
@@ -361,7 +372,7 @@ Question: & Is $\match$ possibly/necessarily popular? \\
 The first problem investigates the existence of a matching that is popular under some or all completions of the partial preference profile.
 The second problem verifies whether a given matching is popular. It induces checking if there exists a completion that makes the matching popular.
 
-\section{Openings}
+\section{Conclusion}
 
 \bibliographystyle{plainnat}
 \bibliography{ref}
