@@ -520,7 +520,7 @@ This proves the desired property.
     \item We assume a \textbf{perfect matching}: $|N| = |O|$ and all agents/objects are matched.
     \item Preferences are given as \textbf{partial orders} (pairwise comparisons).
     \item We consider \textbf{completions of the partial preference profile $P$} $\succ$.
-    \item $\mu$ is a popular matching.
+    \item $\mu$ is a possibly popular matching.
 \end{itemize}
 
 \paragraph{Definitions}
@@ -545,6 +545,18 @@ For each object $\sigma(k) \in O \backslash \{\sigma(i)\}$ and for each agent $i
     \item either $(\sigma(i), \sigma(k)) \in \succ_i$
     \item or $(\sigma(k), \sigma(i))$ and $(\sigma(k), o) \in \succ_j$ for all $o \in O$
 \end{itemize}
+
+
+From the definition of a possibly popular matching $\mu $, we know that there exists a completion $\succ$ of the partial preference profile $P$ such that $\mu$ is popular under $\succ$.
+Under this completion and from the Abraham et al. characterization of popular matchings, we have that every agent is matched to either its $fpost$ or its $spost$, and every $fpost$ is matched.
+Hence:
+\begin{enumerate}
+    \item Because there are as many agents as houses, for all $i \in N$, $\mu(i)$ is a $fpost$ of any agent $j$ such that $fpost(j) \succ_i \mu(i)$.
+    \item For all $\mu(i)$, if there does not exist an agent $j$ such that $\mu(i) = fpost(j)$, then $\mu$ is not popular under $\succ$, which is a contradiction of the second condition of the characterization of Abraham et al.
+    \item For all $\mu(i)$, if $\mu(i) \succeq_i spost(i)$ then the first condition of the characterization of Abraham et al. is verified. In the other case, when $spost(i) \succ_i \mu(i)$, the first condition is not verified and $\mu$ is not popular under $\succ$.
+\end{enumerate}
+
+
 
 % =>
 
