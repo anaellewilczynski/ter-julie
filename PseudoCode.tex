@@ -55,8 +55,8 @@ If $\exists i,j \in N$ such that $\sigma(j) P_i \sigma(i)$ for $o \in O$ such th
 For a given possibly popular matching on a partial profile $P$, there is a complete completion that can be constructed as follows:
 If $\exists i,j \in N$ such that
 \begin{itemize}
-    \item $\sigma(j) P_i \sigma(i)$ and for $o \in O$ such that $(\sigma(j),o) \notin P$ add $(\sigma(j),o) in \succ_j$
-    \item $(\sigma(i), \sigma(j)) \notin P_i$, add $(\sigma(i),\sigma(j)) in \succ_i$
+    \item $\mu(j) P_i \mu(i)$ and for $o \in O \backslash \{\mu(j)\}$ such that $(\mu(j),o) \notin P$ add $(\mu(j),o) in \succ_j$
+    \item $(\mu(i), \mu(j)) \notin P_i$, add $(\mu(i),\mu(j)) in \succ_i$
 \end{itemize}
 \end{proposition}
 
@@ -527,34 +527,76 @@ This proves the desired property.
 \begin{itemize}
     \item $\forall i \in N, \forall o \in O \backslash \{\sigma(i)\}$, $\exists (\sigma(i), o)$ or $(o, \sigma(i))$ in $\succ_i$.
     \item \textbf{From Handbook of Computational Social Choice (p26):} $a \gtrsim b$ or $b \gtrsim a$ for all $a \neq b \in O$ and any voter $i \in N$
+    \item \textbf{Szpilrajn's Theorem:} Any partial order extends to a total order.
 \end{itemize}
 
 \paragraph{Proof}
-We suppose $\mu$ is a possibly popular and perfect matching. 
-Suppose we have found a completion that makes $\mu$ popular such that $\exists i,j \in N$:
-\begin{itemize}
-    \item if $\sigma(j) P_i \sigma(i)$ and for $o \in O$ such that $(\sigma(j), o) \notin P_j$ then $(\sigma(j), o) \in \succ_j$
-    \item if $(\sigma(i), \sigma(j)) \notin P_i$ then $(\sigma(i), \sigma(j)) \in \succ_i$
-\end{itemize}
-Let's prove that this completion is indeed complete and that $\mu$ is a popular matching under this completion.\\
-\textbf{Intuition:}
-$O$ is the set of all objects and because $\mu$ is a perfect matching, $O$ contains all the matched objects. 
-So we can rewritte $O$ as $O = \{\sigma(k) : k \in N\}$.
-For each object $\sigma(k) \in O \backslash \{\sigma(i)\}$ and for each agent $i \in N$,
-\begin{itemize}
-    \item either $(\sigma(i), \sigma(k)) \in \succ_i$
-    \item or $(\sigma(k), \sigma(i))$ and $(\sigma(k), o) \in \succ_j$ for all $o \in O$
-\end{itemize}
+% We suppose $\mu$ is a possibly popular and perfect matching. 
+% Suppose we have found a completion that makes $\mu$ popular such that $\exists i,j \in N$:
+% \begin{itemize}
+%     \item if $\sigma(j) P_i \sigma(i)$ and for $o \in O$ such that $(\sigma(j), o) \notin P_j$ then $(\sigma(j), o) \in \succ_j$
+%     \item if $(\sigma(i), \sigma(j)) \notin P_i$ then $(\sigma(i), \sigma(j)) \in \succ_i$
+% \end{itemize}
+% Let's prove that this completion is indeed complete and that $\mu$ is a popular matching under this completion.\\
+% \textbf{Intuition:}
+% $O$ is the set of all objects and because $\mu$ is a perfect matching, $O$ contains all the matched objects. 
+% So we can rewritte $O$ as $O = \{\sigma(k) : k \in N\}$.
+% For each object $\sigma(k) \in O \backslash \{\sigma(i)\}$ and for each agent $i \in N$,
+% \begin{itemize}
+%     \item either $(\sigma(i), \sigma(k)) \in \succ_i$
+%     \item or $(\sigma(k), \sigma(i))$ and $(\sigma(k), o) \in \succ_j$ for all $o \in O$
+% \end{itemize}
+
+
+
+
 
 
 From the definition of a possibly popular matching $\mu $, we know that there exists a completion $\succ$ of the partial preference profile $P$ such that $\mu$ is popular under $\succ$.
 Under this completion and from the Abraham et al. characterization of popular matchings, we have that every agent is matched to either its $fpost$ or its $spost$, and every $fpost$ is matched.
 Hence:
 \begin{enumerate}
-    \item Because there are as many agents as houses, for all $i \in N$, $\mu(i)$ is a $fpost$ of any agent $j$ such that $fpost(j) \succ_i \mu(i)$.
+    \item Because there are as many agents as houses, for all agent $i \in N$, $\mu(i)$ is a $fpost$ of any agent $j$ such that $fpost(j) \succ_i o$ for all houses $o \in O \backslash \{fpost(j)\}$.
     \item For all $\mu(i)$, if there does not exist an agent $j$ such that $\mu(i) = fpost(j)$, then $\mu$ is not popular under $\succ$, which is a contradiction of the second condition of the characterization of Abraham et al.
     \item For all $\mu(i)$, if $\mu(i) \succeq_i spost(i)$ then the first condition of the characterization of Abraham et al. is verified. In the other case, when $spost(i) \succ_i \mu(i)$, the first condition is not verified and $\mu$ is not popular under $\succ$.
 \end{enumerate}
+
+Reasoning with these three points, we are looking to reconstruct a completion $\succ$ from the partial preference profile $P$.
+
+Let's prove that the construction is well-defined by showing that:
+\begin{enumerate}
+    \item The obtained completion is composed of strict linear orders over the set of all houses and it is irreflexive (no ties), asymmetric and transitive.
+    \item The obtained completion is a total linear order. Each agent $i$ has a complete preference list over all houses $O$, i.e. for all agent $i \in N $ there exists a relation $\succ_i$ such that for all $o, o' \in O$, either $o \succ_i o'$ or $o' \succ_i o$.
+    \item The obtained order is transitive. For all agent $i \in N$, for all $a, b, c \in O$, if $a \succ_i b$ and $b \succ_i c$ then $a \succ_i c$.
+    \item The completion should be consistent with the partial preference profile $P$.
+    \item The completion does not have any cycle. For all agent $i \in N$, for all $a, b, c \in O$, if $a \succ_i b$ and $b \succ_i c$ then not $c \succ_i a$.
+\end{enumerate}
+
+
+\textbf{1. Strict linear order}
+
+We work with \emph{strict} linear orders, consistently with the partial preference profile $P$.
+
+
+Irreflexitivity means that no house is in relation with itself, i.e. for all $i \in N$ and for all $o \in O$, $(o, o) \notin succ_i$.
+For all $i \in N$ and for all $o, o' \in O$ such that $(o', o) \notin P_i$: 
+if $o=o'$, then $(o, o') \notin \succ_i$ because our construction rules do not add any relation between $o$ and itself.
+Otherwise the irreflexivity is verified because the relation is not between $o$ and itself.
+
+
+Asymmetry does not allows to a house $o$ preferred to another $o'$ to be also less preferred than $o'$, i.e 
+for all $i \in N$ and for all $o, o' \in O$ $(o \neq o')$ such that $(o, o') \in \succ_i$ then $(o', o) \notin \succ_i$.
+if $o = \sigma(i)$ and $o' = \sigma(j)$ and $(\sigma(i), \sigma(j)) \notin P_i$, then $(o, o') \in \succ_i$. 
+By contradiction, let's suppose that $(\sigma(j), \sigma(i)) \in \succ_i$. 
+
+\textbf{$=>$ Need to rewrite the proposition!}
+
+
+
+\textbf{Sources:}
+\begin{itemize}
+    \item https://fr.wikipedia.org/wiki/Th%C3%A9or%C3%A8me_d%27extension_de_Szpilrajn
+\end{itemize}
 
 
 
